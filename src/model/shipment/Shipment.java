@@ -1,4 +1,4 @@
-package mode.shipment;
+package model.shipment;
 
 public class Shipment {
 

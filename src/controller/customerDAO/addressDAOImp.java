@@ -1,4 +1,4 @@
-package controller.addressDAO;
+package controller.customerDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,16 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.customer.Address;
+import model.customer.Customer;
 
 public class addressDAOImp implements addressDAO {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/bookstoremanagement?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ADD_SQL = "INSERT INTO address" + "  (City, District, HouseNo) VALUES " +" (?, ?, ?);";
-    private static final String SELECT_ADD_BY_ID = "select ID, City, District, HouseNo from address where ID =?";
-    private static final String DELETE_ADD_SQL = "delete from address where ID  = ?;";
+    private static final String INSERT_ADD_SQL = "INSERT INTO address" + "  (number, city, district, street) VALUES " +" (?, ?, ?, ?);";
+    private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where customerID =?";
+    private static final String DELETE_ADD_SQL = "delete from address where customerID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM address;";
 
     protected Connection getConnection() {
@@ -34,13 +35,14 @@ public class addressDAOImp implements addressDAO {
         return connection;
     }
     
-	public void insertAddress(Address add) {
+	public void insertAddress(Customer cus) {
 		System.out.println(INSERT_ADD_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADD_SQL)) {
-            preparedStatement.setString(1, add.getCity());
-            preparedStatement.setString(2, add.getDistrict());
-            preparedStatement.setInt(3, add.getHouseNo());
+        	preparedStatement.setString(1, cus.getAddress().getNumber());
+            preparedStatement.setString(2, cus.getAddress().getCity());
+            preparedStatement.setString(3, cus.getAddress().getDistrict());
+            preparedStatement.setString(3, cus.getAddress().getStreet());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -72,10 +74,12 @@ public class addressDAOImp implements addressDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                String city = rs.getString("City");
-                String district = rs.getString("District");
-                int houseNo = rs.getInt("HouseNo");
-                add = new Address(ID, city, district , houseNo);
+            	int iD = rs.getInt("ID");
+                String number = rs.getString("number");
+                String city = rs.getString("city");
+                String district = rs.getString("district");
+                String street = rs.getString("street");
+                add = new Address(ID, number, street, district, city);
             }
         } catch (SQLException e) {
             e.printStackTrace();

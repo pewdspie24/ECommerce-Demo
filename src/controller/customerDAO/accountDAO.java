@@ -1,10 +1,11 @@
-package controller.accountDAO;
+package controller.customerDAO;
 
 import model.customer.Account;
+import model.customer.Customer;
 
 public interface accountDAO {
 	
-	public void createAccount(Account acc);
+	public void createAccount(Customer cus);
 	
 	public Account getAccount(int ID);
 	

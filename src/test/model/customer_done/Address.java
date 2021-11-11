@@ -1,4 +1,4 @@
-package model.customer;
+package test.model.customer_done;
 
 public class Address {
 
@@ -7,45 +7,67 @@ public class Address {
 	private String street;
 	private String district;
 	private String city;
-	
-	public Address(int iD, String number, String street, String district, String city) {
-		super();
-		this.ID = iD;
-		this.number = number;
-		this.street = street;
-		this.district = district;
-		this.city = city;
-	}
+
 	public int getID() {
-		return ID;
+		// TODO - implement Address.getID
+		throw new UnsupportedOperationException();
 	}
-	public void setID(int iD) {
-		this.ID = iD;
+
+	/**
+	 * 
+	 * @param ID
+	 */
+	public void setID(int ID) {
+		// TODO - implement Address.setID
+		throw new UnsupportedOperationException();
 	}
+
 	public String getNumber() {
-		return number;
+		return this.number;
 	}
+
+	/**
+	 * 
+	 * @param number
+	 */
 	public void setNumber(String number) {
 		this.number = number;
 	}
+
 	public String getStreet() {
-		return street;
+		return this.street;
 	}
+
+	/**
+	 * 
+	 * @param street
+	 */
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
 	public String getDistrict() {
-		return district;
+		return this.district;
 	}
+
+	/**
+	 * 
+	 * @param district
+	 */
 	public void setDistrict(String district) {
 		this.district = district;
 	}
+
 	public String getCity() {
-		return city;
+		return this.city;
 	}
+
+	/**
+	 * 
+	 * @param city
+	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	
 }

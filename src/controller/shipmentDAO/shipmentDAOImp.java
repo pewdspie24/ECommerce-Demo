@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mode.shipment.Shipment;
 import model.payment.Payment;
+import model.shipment.Shipment;
 
 public class shipmentDAOImp implements shipmentDAO {
 	

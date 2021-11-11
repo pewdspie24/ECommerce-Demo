@@ -2,7 +2,7 @@ package controller.shipmentDAO;
 
 import java.util.List;
 
-import mode.shipment.Shipment;
+import model.shipment.Shipment;
 
 public interface shipmentDAO {
 

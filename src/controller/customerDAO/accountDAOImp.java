@@ -1,4 +1,4 @@
-package controller.accountDAO;
+package controller.customerDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,16 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.customer.Account;
+import model.customer.Customer;
 
 public class accountDAOImp implements accountDAO {
 
-	private String jdbcURL = "jdbc:mysql://localhost:3306/bookstoremanagement?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (username, password) VALUES " +" (?, ?);";
-    private static final String SELECT_ACC_BY_ID = "select id,username,password from account where id =?";
-    private static final String VALIDATE_ACC_BY_USR_PWD = "select * from account where username = ? and password = ? ";
+    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (email, password, createat) VALUES " +" (?, ?, ?);";
+    private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where customerID =?";
+    private static final String VALIDATE_ACC_BY_USR_PWD = "select * from account where email = ? and password = ? ";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM account;";
 
     protected Connection getConnection() {
@@ -34,12 +35,13 @@ public class accountDAOImp implements accountDAO {
         return connection;
     }
 	
-	public void createAccount(Account acc) {
+	public void createAccount(Customer cus) {
 		System.out.println(INSERT_ACC_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACC_SQL)) {
-            preparedStatement.setString(1, acc.getUsername());
-            preparedStatement.setString(2, acc.getPassword());
+            preparedStatement.setString(1, cus.getAccount().getEmail());
+            preparedStatement.setString(2, cus.getAccount().getPassword());
+            preparedStatement.setString(2, cus.getAccount().getCreatedAt());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -60,9 +62,11 @@ public class accountDAOImp implements accountDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                String username = rs.getString("username");
+            	int iD = rs.getInt("ID");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
-                acc = new Account(ID, username, password);
+                String createdAt = rs.getString("createdat");
+                acc = new Account(iD, email, password, createdAt);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,10 +74,10 @@ public class accountDAOImp implements accountDAO {
         return acc;
 	}
 
-	public boolean validateAccount(String username, String password){
+	public boolean validateAccount(String email, String password){
 		boolean status = false;
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(VALIDATE_ACC_BY_USR_PWD)) {
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
@@ -84,10 +88,10 @@ public class accountDAOImp implements accountDAO {
 		return status;
 	}
 	
-	public int getAccID(String username, String password){
+	public int getAccID(String email, String password){
 		int ID = 0;
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(VALIDATE_ACC_BY_USR_PWD)) {
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();

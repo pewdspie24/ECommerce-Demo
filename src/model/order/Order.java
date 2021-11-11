@@ -3,11 +3,9 @@ package model.order;
 import model.cart.Cart;
 import model.customer.Customer;
 import model.payment.Payment;
+import model.shipment.Shipment;
 
 import java.util.Calendar;
-
-import mode.shipment.Shipment;
-
 import java.text.SimpleDateFormat;
 
 public class Order {

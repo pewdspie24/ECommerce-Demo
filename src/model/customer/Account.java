@@ -3,49 +3,39 @@ package model.customer;
 public class Account {
 
 	private int ID;
-	private String username;
+	private String email;
 	private String password;
-
-	public Account(int ID, String username, String password) {
-		this.ID = ID;
-		this.username = username;
+	private String createdAt;
+	public Account(int iD, String email, String password, String createdAt) {
+		super();
+		this.ID = iD;
+		this.email = email;
 		this.password = password;
+		this.createdAt = createdAt;
 	}
-
 	public int getID() {
-		return this.ID;
+		return ID;
 	}
-
-	/**
-	 * 
-	 * @param ID
-	 */
-	public void setID(int ID) {
-		this.ID = ID;
+	public void setID(int iD) {
+		this.ID = iD;
 	}
-
-	public String getUsername() {
-		return this.username;
+	public String getEmail() {
+		return email;
 	}
-
-	/**
-	 * 
-	 * @param username
-	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
-
-	/**
-	 * 
-	 * @param password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }

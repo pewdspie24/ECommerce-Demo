@@ -16,8 +16,8 @@ public class customerDAOImp implements customerDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_CUS_SQL = "INSERT INTO customer" + "  (accountID, addressID, Name, Gender, Age, PhoneNum, Email, AccountNum) VALUES " +" (?, ?, ?, ?, ?, ?, ?, ?);";
-    private static final String SELECT_CUS_BY_ID = "select ID, accountID, addressID, Name, Gender, Age, PhoneNum, Email, AccountNum from customer where ID =?";
+    private static final String INSERT_CUS_SQL = "INSERT INTO customer" + "  (gender, birth, accountnum, ID3, CardID, Date2, ID2, Date) VALUES " +" (?, ?, ?, NULL, NULL, NULL, NULL, NULL);";
+    private static final String SELECT_CUS_BY_ID = "select ID, gender, birth, accountnum, ID3, CardID, Date2, ID2, Date from customer where ID =?";
     private static final String SELECT_ADD_BY_ID = "select ID, City, District, HouseNo from address where ID =?";
     private static final String SELECT_ACC_BY_ID = "select id,username,password from account where id =?";
     private static final String SELECT_CUS_BY_ACC_ID = "select * from customer where accountID =?";
@@ -42,14 +42,9 @@ public class customerDAOImp implements customerDAO {
 		System.out.println(INSERT_CUS_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CUS_SQL)) {
-            preparedStatement.setInt(1, customer.getAccount().getID());
-            preparedStatement.setInt(2, customer.getAddress().getID());
-            preparedStatement.setString(3, customer.getName());
-            preparedStatement.setString(4, customer.getGender());
-            preparedStatement.setInt(5, customer.getAge());
-            preparedStatement.setString(6, customer.getPhoneNum());
-            preparedStatement.setString(7, customer.getEmail());
-            preparedStatement.setString(8, customer.getAccountNum());
+            preparedStatement.setString(1, customer.getGender());
+            preparedStatement.setString(2, customer.getBirth());
+            preparedStatement.setString(3, customer.getAccountNum());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -80,12 +75,11 @@ public class customerDAOImp implements customerDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-            	int	accountID = rs.getInt("AccountID");
-            	Account account = getAccount(accountID);
-            	int	addressID = rs.getInt("AddressID");
-            	Address address = getAddress(addressID);
-                String name = rs.getString("Name");
-                String gender = rs.getString("Gender");
+            	String	gender = rs.getString("gender");
+            	Account account = getAccount(ID);
+            	String	birth = rs.getS("birth");
+            	Address address = getAddress(ID);
+                String accountnum = rs.getString("accountnum");
                 int age = rs.getInt("Age");
                 String phoneNum = rs.getString("PhoneNum");
                 String email = rs.getString("Email");

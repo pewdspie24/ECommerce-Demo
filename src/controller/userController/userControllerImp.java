@@ -10,18 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.accountDAO.accountDAO;
-import controller.accountDAO.accountDAOImp;
-import controller.addressDAO.addressDAOImp;
 import controller.bookDAO.bookDAOImp;
 import controller.bookitemDAO.bookitemDAOImp;
 import controller.cartDAO.cartDAOImp;
+import controller.customerDAO.accountDAO;
+import controller.customerDAO.accountDAOImp;
+import controller.customerDAO.addressDAOImp;
 import controller.customerDAO.customerDAOImp;
 import controller.orderDAO.orderDAOImp;
 import controller.paymentDAO.paymentDAO;
 import controller.paymentDAO.paymentDAOImp;
 import controller.shipmentDAO.shipmentDAOImp;
-import mode.shipment.Shipment;
 import model.book.Book;
 import model.bookitem.Bookitem;
 import model.cart.Cart;
@@ -30,6 +29,7 @@ import model.customer.Address;
 import model.customer.Customer;
 import model.order.Order;
 import model.payment.Payment;
+import model.shipment.Shipment;
 
 
 @WebServlet("/")

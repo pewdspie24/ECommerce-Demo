@@ -1,4 +1,7 @@
-package model.customer;
+package test.model.customer_done;
+
+import model.customer.Fullname;
+import model.customer.Phone;
 
 public class Customer {
 
@@ -10,66 +13,103 @@ public class Customer {
 	private Fullname fullname;
 	private Phone phone;
 	private Address address;
-	
-	public Customer(int iD, String accountNum, String gender, String birth, Account account, Fullname fullname,
-			Phone phone, Address address) {
-		super();
-		this.ID = iD;
-		this.accountNum = accountNum;
-		this.gender = gender;
-		this.birth = birth;
-		this.account = account;
-		this.fullname = fullname;
-		this.phone = phone;
-		this.address = address;
-	}
+
 	public int getID() {
-		return ID;
+		// TODO - implement Customer.getID
+		throw new UnsupportedOperationException();
 	}
-	public void setID(int iD) {
-		this.ID = iD;
+
+	/**
+	 * 
+	 * @param ID
+	 */
+	public void setID(int ID) {
+		// TODO - implement Customer.setID
+		throw new UnsupportedOperationException();
 	}
+
 	public String getAccountNum() {
-		return accountNum;
+		return this.accountNum;
 	}
+
+	/**
+	 * 
+	 * @param accountNum
+	 */
 	public void setAccountNum(String accountNum) {
 		this.accountNum = accountNum;
 	}
+
 	public String getGender() {
-		return gender;
+		return this.gender;
 	}
+
+	/**
+	 * 
+	 * @param gender
+	 */
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getBirth() {
-		return birth;
+		return this.birth;
 	}
+
+	/**
+	 * 
+	 * @param birth
+	 */
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+
 	public Account getAccount() {
-		return account;
+		return this.account;
 	}
+
+	/**
+	 * 
+	 * @param account
+	 */
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
 	public Fullname getFullname() {
-		return fullname;
+		return this.fullname;
 	}
+
+	/**
+	 * 
+	 * @param fullname
+	 */
 	public void setFullname(Fullname fullname) {
 		this.fullname = fullname;
 	}
+
 	public Phone getPhone() {
-		return phone;
+		return this.phone;
 	}
+
+	/**
+	 * 
+	 * @param phone
+	 */
 	public void setPhone(Phone phone) {
 		this.phone = phone;
 	}
+
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
+
+	/**
+	 * 
+	 * @param address
+	 */
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
+
 }

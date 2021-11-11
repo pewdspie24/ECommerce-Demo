@@ -10,11 +10,11 @@ import controller.cartDAO.cartDAOImp;
 import controller.customerDAO.customerDAOImp;
 import controller.paymentDAO.paymentDAOImp;
 import controller.shipmentDAO.shipmentDAOImp;
-import mode.shipment.Shipment;
 import model.cart.Cart;
 import model.customer.Customer;
 import model.order.Order;
 import model.payment.Payment;
+import model.shipment.Shipment;
 
 public class orderDAOImp implements orderDAO {
 
