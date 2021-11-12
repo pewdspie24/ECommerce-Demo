@@ -9,9 +9,11 @@ public class Boot extends Shoes {
 	private String style;
 	private String fashionList;
 
-	public Boot(int iD, String height, String type, String brandName, String style, String fashionList) {
-		super();
-		ID = iD;
+
+	public Boot(int iD, ManufacturerShoes man, String gender, String weight, String launched, String material, int iD2,
+			String height, String type, String brandName, String style, String fashionList) {
+		super(iD, man, gender, weight, launched, material);
+		ID = iD2;
 		this.height = height;
 		this.type = type;
 		this.brandName = brandName;

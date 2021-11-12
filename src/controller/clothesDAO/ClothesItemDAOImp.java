@@ -23,7 +23,7 @@ public class ClothesItemDAOImp implements ClothesItemDAO {
     private static final String SELECT_ALL_SIITEM_ID = "SELECT * FROM clothesitem WHERE ClothesID IN (SELECT ID FROM Clothes WHERE ID2 is NOT NULL); ";
     private static final String UPDATE_CITEM_ID = "UPDATE clothesitem SET quantity= ? WHERE ID = ?;";
     private static final String SELECT_CITEM_ID = "select * from clothesitem where id =?;";
-    private static final String SELECT_BOOK_ID = "select * from Clothes where id =?;";
+    private static final String SELECT_CLOTHES_ID = "select * from Clothes where id =?;";
     private static final String SELECT_NUM_BY_ID = "select quantity from clothesitem where ID = ?";
     private static final String SELECT_MAN_BY_ID = "select * from ManufacturerClothes where id =?";
     
@@ -43,18 +43,18 @@ public class ClothesItemDAOImp implements ClothesItemDAO {
     }
     
     public int getNum(int ID){
-		int instock = 0;
+		int quantity = 0;
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NUM_BY_ID)) {
             preparedStatement.setInt(1, ID);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-            	instock = rs.getInt("instock");
+            	quantity = rs.getInt("quantity");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		return instock;
+		return quantity;
 	}    
     
 	public void addClothesItem() {
@@ -112,7 +112,7 @@ public class ClothesItemDAOImp implements ClothesItemDAO {
 		try (Connection connection = getConnection();
 
 	            // Step 2:Create a statement using connection object
-	            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_ID);) {
+	            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CLOTHES_ID);) {
 				preparedStatement.setInt(1, ID);
 	            System.out.println(preparedStatement);
 	            // Step 3: Execute the query or update query

@@ -1,4 +1,4 @@
-package logicApplication.eletronicDAO;
+package controller.eletronicDAO;
 
 public class ElectronicDAOImp implements ElectronicDAO {
 

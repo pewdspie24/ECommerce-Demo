@@ -3,14 +3,16 @@ package model.shoes;
 public class Shoes {
 
 	private int ID;
+	private ManufacturerShoes man;
 	private String gender;
 	private String weight;
 	private String launched;
 	private String material;
 
-	public Shoes(int iD, String gender, String weight, String launched, String material) {
+	public Shoes(int iD, ManufacturerShoes man, String gender, String weight, String launched, String material) {
 		super();
 		ID = iD;
+		this.man = man;
 		this.gender = gender;
 		this.weight = weight;
 		this.launched = launched;
@@ -27,6 +29,14 @@ public class Shoes {
 	 */
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	public ManufacturerShoes getMan() {
+		return man;
+	}
+
+	public void setMan(ManufacturerShoes man) {
+		this.man = man;
 	}
 
 	public String getGender() {

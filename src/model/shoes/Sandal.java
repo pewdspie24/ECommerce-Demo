@@ -7,9 +7,9 @@ public class Sandal extends Shoes {
 	private String type;
 	private String brandName;
 
-	public Sandal(int iD, String gender, String weight, String launched, String material, int iD2, String style,
+	public Sandal(int iD, ManufacturerShoes man, String gender, String weight, String launched, String material, int iD2, String style,
 			String type, String brandName) {
-		super(iD, gender, weight, launched, material);
+		super(iD, man, gender, weight, launched, material);
 		ID = iD2;
 		this.style = style;
 		this.type = type;

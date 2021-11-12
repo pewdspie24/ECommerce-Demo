@@ -7,10 +7,12 @@ public class Electronic {
 	private int year;
 	private String certificates;
 	private String safetyClaims;
+	private ManufacturerElectronics man;
 	
-	public Electronic(int iD, String name, int year, String certificates, String safetyClaims) {
+	public Electronic(int iD, ManufacturerElectronics man, String name, int year, String certificates, String safetyClaims) {
 		super();
-		ID = iD;
+		this.ID = iD;
+		this.man = man;
 		this.name = name;
 		this.year = year;
 		this.certificates = certificates;
@@ -27,6 +29,14 @@ public class Electronic {
 	 */
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	public ManufacturerElectronics getMan() {
+		return man;
+	}
+
+	public void setMan(ManufacturerElectronics man) {
+		this.man = man;
 	}
 
 	public String getName() {

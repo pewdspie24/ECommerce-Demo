@@ -10,9 +10,9 @@ public class MobilePhone extends Electronic {
 	private String resolution;
 	private Boolean touchable;
 
-	public MobilePhone(int iD, String name, int year, String certificates, String safetyClaims, int iD2, String storage,
+	public MobilePhone(int iD, ManufacturerElectronics man, String name, int year, String certificates, String safetyClaims, int iD2, String storage,
 			String rAM, String operationSystem, float screenWidth, String resolution, Boolean touchable) {
-		super(iD, name, year, certificates, safetyClaims);
+		super(iD, man, name, year, certificates, safetyClaims);
 		ID = iD2;
 		this.storage = storage;
 		RAM = rAM;

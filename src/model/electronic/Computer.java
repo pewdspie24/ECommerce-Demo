@@ -7,9 +7,9 @@ public class Computer extends Electronic {
 	private String RAM;
 	private String OperationSystem;
 	
-	public Computer(int iD, String name, int year, String certificates, String safetyClaims, int iD2, String disk,
+	public Computer(int iD, ManufacturerElectronics man, String name, int year, String certificates, String safetyClaims, int iD2, String disk,
 			String rAM, String operationSystem) {
-		super(iD, name, year, certificates, safetyClaims);
+		super(iD, man, name, year, certificates, safetyClaims);
 		ID = iD2;
 		this.disk = disk;
 		RAM = rAM;

@@ -10,9 +10,9 @@ public class Laptop extends Electronic {
 	private String operationSystem;
 	private Boolean touchable;
 	
-	public Laptop(int iD, String name, int year, String certificates, String safetyClaims, int iD2, float screenWidth,
+	public Laptop(int iD, ManufacturerElectronics man, String name, int year, String certificates, String safetyClaims, int iD2, float screenWidth,
 			String resolution, String disk, String rAM, String operationSystem, Boolean touchable) {
-		super(iD, name, year, certificates, safetyClaims);
+		super(iD, man, name, year, certificates, safetyClaims);
 		ID = iD2;
 		this.screenWidth = screenWidth;
 		this.resolution = resolution;
