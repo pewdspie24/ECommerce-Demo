@@ -14,6 +14,10 @@ public interface bookDAO {
 
 	List<Book> findAllBook();
 
-	public Book findByID(int ID);
+	public Book findComicByID(int ID);
+	
+	public Book findLNByID(int ID);
+	
+	public Book findMagazineByID(int ID);
 
 }

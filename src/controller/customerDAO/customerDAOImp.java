@@ -9,17 +9,21 @@ import java.sql.SQLException;
 import model.customer.Account;
 import model.customer.Address;
 import model.customer.Customer;
+import model.customer.Fullname;
+import model.customer.Phone;
 
 public class customerDAOImp implements customerDAO {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/bookstoremanagement?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
     private static final String INSERT_CUS_SQL = "INSERT INTO customer" + "  (gender, birth, accountnum, ID3, CardID, Date2, ID2, Date) VALUES " +" (?, ?, ?, NULL, NULL, NULL, NULL, NULL);";
     private static final String SELECT_CUS_BY_ID = "select ID, gender, birth, accountnum, ID3, CardID, Date2, ID2, Date from customer where ID =?";
-    private static final String SELECT_ADD_BY_ID = "select ID, City, District, HouseNo from address where ID =?";
-    private static final String SELECT_ACC_BY_ID = "select id,username,password from account where id =?";
+    private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where customerID =?";
+    private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where customerID =?";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where customerID =?";
+    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where customerID =?";
     private static final String SELECT_CUS_BY_ACC_ID = "select * from customer where accountID =?";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM customer;";
     
@@ -77,14 +81,12 @@ public class customerDAOImp implements customerDAO {
             while (rs.next()) {
             	String	gender = rs.getString("gender");
             	Account account = getAccount(ID);
-            	String	birth = rs.getS("birth");
+            	String	birth = rs.getString("birth");
             	Address address = getAddress(ID);
-                String accountnum = rs.getString("accountnum");
-                int age = rs.getInt("Age");
-                String phoneNum = rs.getString("PhoneNum");
-                String email = rs.getString("Email");
-                String accountNum = rs.getString("AccountNum");
-                customer = new Customer(ID, name, gender, age, address, account, phoneNum, email, accountNum);
+                String accountNum = rs.getString("accountnum");
+                Phone phone = getPhone(ID);
+                Fullname fullname = getFN(ID);
+                customer = new Customer(1, accountNum, gender, birth, account, fullname, phone, address);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,9 +108,11 @@ public class customerDAOImp implements customerDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                String username = rs.getString("username");
+            	int iD = rs.getInt("ID");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
-                acc = new Account(ID, username, password);
+                String createdAt = rs.getString("createdat");
+                acc = new Account(iD, email, password, createdAt);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,15 +134,65 @@ public class customerDAOImp implements customerDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                String city = rs.getString("City");
-                String district = rs.getString("District");
-                int houseNo = rs.getInt("HouseNo");
-                add = new Address(ID, city, district , houseNo);
+            	int iD = rs.getInt("ID");
+                String number = rs.getString("number");
+                String city = rs.getString("city");
+                String district = rs.getString("district");
+                String street = rs.getString("street");
+                add = new Address(ID, number, street, district, city);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return add;
+	}
+	
+	public Fullname getFN(int ID) {
+		Fullname fn = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FN_BY_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int iD = rs.getInt("ID");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                fn = new Fullname(iD, firstName, lastName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fn;
+	}
+	
+	public Phone getPhone(int ID) {
+		Phone pho = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PHO_BY_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int iD = rs.getInt("ID");
+                String statesNo = rs.getString("StatesNo");
+                String number = rs.getString("Number");
+                pho = new Phone(iD, statesNo, number);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pho;
 	}
 	
 	public int getCusID(int accountID){
