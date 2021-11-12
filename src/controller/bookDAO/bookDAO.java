@@ -6,11 +6,11 @@ import model.book.Book;
 
 public interface bookDAO {
 
-	void insertBook();
+	void insertBook(String title, String author, int years, String publication, float price);
 
-	void deleteBook();
+	void deleteBook(int id);
 
-	void updateBook();
+	void updateBook(int id, String title, String author, int years, String publication, float price);
 
 	List<Book> findAllBook();
 

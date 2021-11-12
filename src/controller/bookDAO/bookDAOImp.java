@@ -18,6 +18,11 @@ public class bookDAOImp implements bookDAO {
     
     private static final String SELECT_BOOK_BY_ID = "select id,title,author,years,publication, price from book where id =?";
     private static final String SELECT_ALL_BOOKS = "select * from book";
+    
+    private static final String INSERT_BOOK = "INSERT INTO BOOK(title, author, years, publication, price) values (?,?,?,?,?,?)";
+    private static final String DELETE_BOOK = "delete from book where id=?";
+    private static final String UPDATE_BOOK = "Update book set title=?, author=?, years=?, publication=?, price=? where id=?";
+  
 //    private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
 //    private static final String UPDATE_USERS_SQL = "update users set name = ?,gender = ?,email= ?, city =? where id = ?;";
     
@@ -38,19 +43,49 @@ public class bookDAOImp implements bookDAO {
         return connection;
     }
     
-	public void insertBook() {
-		// TODO - implement bookDAOImp.insertBook
-		throw new UnsupportedOperationException();
+	public void insertBook(String title, String author, int years, String publication, float price) {
+		 try (Connection connection = getConnection();
+		            // Step 2:Create a statement using connection object
+		            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOOK);) {
+			 		preparedStatement.setString(1, title);
+			 		preparedStatement.setString(2, author);
+			 		preparedStatement.setInt(3, years);
+			 		preparedStatement.setString(4, publication);
+			 		preparedStatement.setFloat(5, price);
+		            System.out.println(preparedStatement);
+		            int row = preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	}
 
-	public void deleteBook() {
-		// TODO - implement bookDAOImp.deleteBook
-		throw new UnsupportedOperationException();
+	public void deleteBook(int id) {
+		try (Connection connection = getConnection();
+	            // Step 2:Create a statement using connection object
+	            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK);) {
+		 		preparedStatement.setInt(1, id);
+	            System.out.println(preparedStatement);
+	            int row = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 
-	public void updateBook() {
-		// TODO - implement bookDAOImp.updateBook
-		throw new UnsupportedOperationException();
+	public void updateBook(int id, String title, String author, int years, String publication, float price) {
+		 try (Connection connection = getConnection();
+		            // Step 2:Create a statement using connection object
+		            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOK);) {
+			 		preparedStatement.setString(1, title);
+			 		preparedStatement.setString(2, author);
+			 		preparedStatement.setInt(3, years);
+			 		preparedStatement.setString(4, publication);
+			 		preparedStatement.setFloat(5, price);
+			 		preparedStatement.setInt(6, id);
+		            System.out.println(preparedStatement);
+		            int row = preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	}
 
 	public List <Book> findAllBook() {
