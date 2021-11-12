@@ -56,8 +56,8 @@
                         <div class="card-header bg-success text-white text-uppercase"><i class="fa fa-list"></i>
                             Categories</div>
                         <ul class="list-group">
-                            <li class="list-group-item active"><a href="index.jsp" style="color: #000;">All product</a></li>
-                            <li class="list-group-item"><a href="BookIndex.jsp" style="color: #000;">Book</a></li>
+                            <li class="list-group-item"><a href="index.jsp" style="color: #000;">All product</a></li>
+                            <li class="list-group-item active"><a href="BookIndex.jsp" style="color: #000;">Book</a></li>
                             <li class="list-group-item"><a href="ShoesIndex.jsp" style="color: #000;">Shoes</a></li>
                             <li class="list-group-item"><a href="ElectronicIndex.jsp" style="color: #000;">Electronic</a></li>
                         </ul>
