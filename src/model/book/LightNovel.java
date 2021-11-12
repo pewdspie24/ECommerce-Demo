@@ -7,10 +7,10 @@ public class LightNovel extends Book {
 	private String translateLanguage;
 	private String seasons;
 	
-	public LightNovel(int iD, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
+	public LightNovel(int iD, Publisher publisher, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
 		String national, String translateLanguage, String seasons) {
-		super(iD, iSBN, title, numberOfPage, summary, year);
-		ID = iD2;
+		super(iD, publisher, iSBN, title, numberOfPage, summary, year);
+		this.ID = iD2;
 		this.national = national;
 		this.translateLanguage = translateLanguage;
 		this.seasons = seasons;

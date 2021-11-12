@@ -3,14 +3,16 @@ package model.book;
 public class BookItem {
 
 	private int ID;
+	private Book book;
 	private int inStock;
 	private float price;
 	private float discount;
 	private String date;
 	
-	public BookItem(int iD, int inStock, float price, float discount, String date) {
+	public BookItem(int iD, Book book, int inStock, float price, float discount, String date) {
 		super();
-		ID = iD;
+		this.ID = iD;
+		this.book = book;
 		this.inStock = inStock;
 		this.price = price;
 		this.discount = discount;
@@ -27,6 +29,14 @@ public class BookItem {
 	 */
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public int getInStock() {

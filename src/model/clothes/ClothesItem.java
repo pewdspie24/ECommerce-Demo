@@ -3,14 +3,16 @@ package model.clothes;
 public class ClothesItem {
 
 	private int ID;
+	private Clothes clothes;
 	private int quantity;
 	private float price;
 	private float discount;
 	private String date;
 
-	public ClothesItem(int iD, int quantity, float price, float discount, String date) {
+	public ClothesItem(int iD, Clothes clothes, int quantity, float price, float discount, String date) {
 		super();
 		ID = iD;
+		this.clothes = clothes;
 		this.quantity = quantity;
 		this.price = price;
 		this.discount = discount;
@@ -27,6 +29,14 @@ public class ClothesItem {
 	 */
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	public Clothes getClothes() {
+		return clothes;
+	}
+
+	public void setClothes(Clothes clothes) {
+		this.clothes = clothes;
 	}
 
 	public int getQuantity() {

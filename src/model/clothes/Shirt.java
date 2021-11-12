@@ -7,9 +7,9 @@ public class Shirt extends Clothes {
 	private String fashionList;
 	private String sleeveType;
 
-	public Shirt(int iD, String gender, String type, String material, int iD2, String type2, String fashionList,
+	public Shirt(int iD, ManufacturerClothes man, String gender, String type, String material, int iD2, String type2, String fashionList,
 			String sleeveType) {
-		super(iD, gender, type, material);
+		super(iD, man, gender, type, material);
 		ID = iD2;
 		type = type2;
 		this.fashionList = fashionList;

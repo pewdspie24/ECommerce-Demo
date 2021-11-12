@@ -7,10 +7,10 @@ public class Magazine extends Book {
 	private String months;
 	private String type;
 
-	public Magazine(int iD, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
+	public Magazine(int iD, Publisher publisher, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
 			String nameBook, String months, String type) {
-		super(iD, iSBN, title, numberOfPage, summary, year);
-		ID = iD2;
+		super(iD, publisher, iSBN, title, numberOfPage, summary, year);
+		this.ID = iD2;
 		this.nameBook = nameBook;
 		this.months = months;
 		this.type = type;

@@ -7,11 +7,11 @@ public class Jeans extends Clothes {
 	private String length;
 	private String pocketAvailable;
 
-	public Jeans(int iD, String gender, String type, String material, int iD2, String type2, String length,
+	public Jeans(int iD, ManufacturerClothes man, String gender, String type, String material, int iD2, String type2, String length,
 			String pocketAvailable) {
-		super(iD, gender, type, material);
+		super(iD, man, gender, type, material);
 		ID = iD2;
-		type = type2;
+		this.type = type2;
 		this.length = length;
 		this.pocketAvailable = pocketAvailable;
 	}

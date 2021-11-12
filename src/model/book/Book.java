@@ -3,6 +3,7 @@ package model.book;
 public class Book {
 	
 	private int ID;
+	private Publisher publisher;
 	private String ISBN;
 	private String title;
 	private int numberOfPage;
@@ -11,10 +12,11 @@ public class Book {
 
 	
 	
-	public Book(int iD, String iSBN, String title, int numberOfPage, String summary, int year) {
+	public Book(int iD, Publisher publisher, String iSBN, String title, int numberOfPage, String summary, int year) {
 		super();
 		this.ID = iD;
 		this.ISBN = iSBN;
+		this.publisher = publisher;
 		this.title = title;
 		this.numberOfPage = numberOfPage;
 		this.summary = summary;
@@ -27,6 +29,14 @@ public class Book {
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
 	}
 
 	public String getISBN() {

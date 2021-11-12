@@ -1,0 +1,18 @@
+book:
+2 -> LN
+3 -> Comic
+4 -> Magazine
+elec:
+2 -> Mobile
+3 -> Laptop
+4 -> Computer
+clothes:
+2 -> Shirt
+3 -> Jean
+4 -> Short
+shoe:
+2 -> Sneaker (Deo biet dung k)
+3 -> Boot
+4 -> Sandal (Same)
+
+xóa variant + color + size

@@ -8,9 +8,9 @@ public class Short extends Clothes {
 	private String age;
 	private String fashionList;
 
-	public Short(int iD, String gender, String type, String material, int iD2, String type2, String length, String age,
+	public Short(int iD, ManufacturerClothes man, String gender, String type, String material, int iD2, String type2, String length, String age,
 			String fashionList) {
-		super(iD, gender, type, material);
+		super(iD, man, gender, type, material);
 		ID = iD2;
 		type = type2;
 		this.length = length;

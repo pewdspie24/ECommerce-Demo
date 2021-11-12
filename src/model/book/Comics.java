@@ -8,10 +8,10 @@ public class Comics extends Book {
 	private String artist;
 
 	
-	public Comics(int iD, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
+	public Comics(int iD, Publisher publisher, String iSBN, String title, int numberOfPage, String summary, int year, int iD2,
 			String nameComics, String seriesName, String artist) {
-		super(iD, iSBN, title, numberOfPage, summary, year);
-		ID = iD2;
+		super(iD, publisher, iSBN, title, numberOfPage, summary, year);
+		this.ID = iD2;
 		this.nameComics = nameComics;
 		this.seriesName = seriesName;
 		this.artist = artist;
