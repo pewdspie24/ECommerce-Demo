@@ -27,7 +27,10 @@ public class BookItemDAOImp implements BookItemDAO {
     private static final String SELECT_NUM_BY_ID = "select instock from bookitem where ID = ?";
     private static final String SELECT_PUB_BY_ID = "select * from publisher where id =?";
     
-    protected Connection getConnection() {
+    public BookItemDAOImp() {
+	}
+
+	protected Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");

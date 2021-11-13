@@ -3,14 +3,16 @@ package model.electronic;
 public class ElectronicItem {
 
 	private int ID;
+	private Electronic electronic;
 	private int quantity;
 	private float price;
 	private float discount;
 	private String date;
 	
-	public ElectronicItem(int iD, int quantity, float price, float discount, String date) {
+	public ElectronicItem(int iD, Electronic electronic, int quantity, float price, float discount, String date) {
 		super();
-		ID = iD;
+		this.ID = iD;
+		this.electronic = electronic;
 		this.quantity = quantity;
 		this.price = price;
 		this.discount = discount;
@@ -27,6 +29,14 @@ public class ElectronicItem {
 	 */
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	public Electronic getElectronic() {
+		return electronic;
+	}
+
+	public void setElectronic(Electronic electronic) {
+		this.electronic = electronic;
 	}
 
 	public int getQuantity() {

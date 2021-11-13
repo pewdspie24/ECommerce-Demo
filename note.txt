@@ -15,4 +15,17 @@ shoe:
 3 -> Boot
 4 -> Sandal (Same)
 
+Voucher:
+2 -> Constant
+3 -> Percen
+
+Shipment:
+2 -> Fast
+3 ->  Eco
+4 -> Abroad
+
 xóa variant + color + size
+payment-order asso
+cart-order asso
+bill-order asso
+tất cả book, clothes, elec, shoe vs item asso

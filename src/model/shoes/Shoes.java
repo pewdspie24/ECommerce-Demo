@@ -11,7 +11,7 @@ public class Shoes {
 
 	public Shoes(int iD, ManufacturerShoes man, String gender, String weight, String launched, String material) {
 		super();
-		ID = iD;
+		this.ID = iD;
 		this.man = man;
 		this.gender = gender;
 		this.weight = weight;

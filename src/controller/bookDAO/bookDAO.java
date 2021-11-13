@@ -20,6 +20,8 @@ public interface bookDAO {
 	public List <LightNovel> findAllLN();
 	
 	public List <Magazine> findAllMagazine();
+	
+	public int checkType(int ID);
 
 	public Comics findComicByID(int ID);
 	

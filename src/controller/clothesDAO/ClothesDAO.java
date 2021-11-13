@@ -19,7 +19,9 @@ public interface ClothesDAO {
 	public List <Jeans> findAllJeans();
 	
 	public List <Short> findAllShort();
-
+	
+	public int checkType(int ID);
+	
 	public Shirt findShirtByID(int ID);
 	
 	public Jeans findJeansByID(int ID);
