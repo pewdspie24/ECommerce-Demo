@@ -8,7 +8,7 @@ elec:
 4 -> Computer
 clothes:
 2 -> Shirt
-3 -> Jean
+3 -> Jeans
 4 -> Short
 shoe:
 2 -> Sneaker (Deo biet dung k)
@@ -24,8 +24,13 @@ Shipment:
 3 ->  Eco
 4 -> Abroad
 
+Payment:
+2 -> Cash
+3 -> Check
+4 -> Credit
+
 xóa variant + color + size
-payment-order asso
-cart-order asso
-bill-order asso
+cart-order asso, đưa cartid về order, xóa FK OrderID
+bill-order asso, đưa orderid về billonline, xóa FK BillID
 tất cả book, clothes, elec, shoe vs item asso
+1 cus nhiều cart

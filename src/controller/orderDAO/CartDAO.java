@@ -1,12 +1,12 @@
-package logicApplication.orderDAO;
+package controller.orderDAO;
 
+import model.order.Cart;
 import model.book.*;
 import model.clothes.*;
 import model.shoes.*;
+import model.electronic.*;
 
 public interface CartDAO {
-
-	void showCart();
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public interface CartDAO {
 	 * 
 	 * @param electronics
 	 */
-	void addElectronicItem(ElectronicsItem electronics);
+	void addElectronicItem(ElectronicItem electronic);
 
 	/**
 	 * 
@@ -31,5 +31,11 @@ public interface CartDAO {
 	 * @param shoes
 	 */
 	void addShoesItem(ShoesItem shoes);
+	
+	public void createCart(Cart cart);
+	
+	public void updateCart(Cart cart, float price, int quantity);
+
+	public Cart findCart(int ID);
 
 }
