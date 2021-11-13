@@ -6,19 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.customer.Address;
 import model.customer.Customer;
+import model.customer.Phone;
 
-public class addressDAOImp implements addressDAO {
+public class PhoneDAOImp implements PhoneDAO{
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ADD_SQL = "INSERT INTO address" + "  (customerID, number, city, district, street) VALUES " +" (?, ?, ?, ?, ?);";
-    private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where customerID =?";
-    private static final String DELETE_ADD_SQL = "delete from address where customerID  = ?;";
-    private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM address;";
+    private static final String INSERT_PHO_SQL = "INSERT INTO PHONE" + "  (customerID, statesNo, number) VALUES " +" (?, ?, ?);";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where customerID =?";
+    private static final String UPDATE_PHO_SQL = "UPDATE phone set statesno = ?, number = ? where customerID  = ?;";
+    private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM phone;";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -35,15 +35,13 @@ public class addressDAOImp implements addressDAO {
         return connection;
     }
     
-	public void insertAddress(Customer cus) {
-		System.out.println(INSERT_ADD_SQL);
+	public void createPhone(Customer cus) {
+		System.out.println(INSERT_PHO_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADD_SQL)) {
         	preparedStatement.setInt(1, cus.getID());
-        	preparedStatement.setString(2, cus.getAddress().getNumber());
-            preparedStatement.setString(3, cus.getAddress().getCity());
-            preparedStatement.setString(4, cus.getAddress().getDistrict());
-            preparedStatement.setString(5, cus.getAddress().getStreet());
+            preparedStatement.setString(2, cus.getPhone().getStatesNo());
+            preparedStatement.setString(3, cus.getPhone().getNumber());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -51,23 +49,24 @@ public class addressDAOImp implements addressDAO {
         }
 	}
 
-	public boolean deleteAddress(int ID) {
-		boolean rowDeleted = false;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_ADD_SQL);) {
-            statement.setInt(1, ID);
-            rowDeleted = statement.executeUpdate() > 0;
+	public void updatePhone(Customer cus, Phone pho) {
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PHO_SQL);) {
+        	preparedStatement.setString(1, pho.getStatesNo());
+        	preparedStatement.setString(2, pho.getNumber());
+        	preparedStatement.setInt(3, cus.getID());
+        	System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return rowDeleted;
 	}
 
-	public Address getAddress(int ID) {
-		Address add = null;
+	public Phone getPhone(int ID) {
+		Phone pho = null;
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
             // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ADD_BY_ID);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PHO_BY_ID);) {
             preparedStatement.setInt(1, ID);
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
@@ -76,16 +75,14 @@ public class addressDAOImp implements addressDAO {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
             	int iD = rs.getInt("ID");
-                String number = rs.getString("number");
-                String city = rs.getString("city");
-                String district = rs.getString("district");
-                String street = rs.getString("street");
-                add = new Address(ID, number, street, district, city);
+                String statesNo = rs.getString("StatesNo");
+                String number = rs.getString("Number");
+                pho = new Phone(iD, statesNo, number);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return add;
+        return pho;
 	}
 	
 	public int getMaxID(){
@@ -101,5 +98,4 @@ public class addressDAOImp implements addressDAO {
         }
 		return id;
 	}
-	
 }

@@ -15,7 +15,7 @@ public class accountDAOImp implements accountDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (email, password, createat) VALUES " +" (?, ?, ?);";
+    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (customerID, email, password, createat) VALUES " +" (?, ?, ?, ?);";
     private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where customerID =?";
     private static final String VALIDATE_ACC_BY_USR_PWD = "select * from account where email = ? and password = ? ";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM account;";
@@ -39,9 +39,10 @@ public class accountDAOImp implements accountDAO {
 		System.out.println(INSERT_ACC_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ACC_SQL)) {
-            preparedStatement.setString(1, cus.getAccount().getEmail());
-            preparedStatement.setString(2, cus.getAccount().getPassword());
-            preparedStatement.setString(2, cus.getAccount().getCreatedAt());
+        	preparedStatement.setInt(1, cus.getID());
+        	preparedStatement.setString(2, cus.getAccount().getEmail());
+            preparedStatement.setString(3, cus.getAccount().getPassword());
+            preparedStatement.setString(4, cus.getAccount().getCreatedAt());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,34 +1,54 @@
 package model.book;
 
 public class Book {
+	
 	private int ID;
+	private Publisher publisher;
+	private String ISBN;
 	private String title;
-	private String author;
-	private int years;
-	private String publication;
-	private float price;
+	private int numberOfPage;
+	private String summary;
+	private int year;
+
 	
-	public Book(int ID, String title, String author, int years,
-			String publication, float price) {
+	
+	public Book(int iD, Publisher publisher, String iSBN, String title, int numberOfPage, String summary, int year) {
 		super();
-		this.ID = ID;
+		this.ID = iD;
+		this.ISBN = iSBN;
+		this.publisher = publisher;
 		this.title = title;
-		this.author = author;
-		this.years = years;
-		this.publication = publication;
-		this.price = price;
+		this.numberOfPage = numberOfPage;
+		this.summary = summary;
+		this.year = year;
 	}
-	
+
 	public int getID() {
-		return this.ID;
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getISBN() {
+		return this.ISBN;
 	}
 
 	/**
 	 * 
-	 * @param ID
+	 * @param ISBN
 	 */
-	public void setID(int ID) {
-		this.ID = ID;
+	public void setISBN(String ISBN) {
+		this.ISBN = ISBN;
 	}
 
 	public String getTitle() {
@@ -43,52 +63,40 @@ public class Book {
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return this.author;
+	public int getNumberOfPage() {
+		return this.numberOfPage;
 	}
 
 	/**
 	 * 
-	 * @param author
+	 * @param numberOfPage
 	 */
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setNumberOfPage(int numberOfPage) {
+		this.numberOfPage = numberOfPage;
 	}
 
-	public int getYears() {
-		return this.years;
+	public String getSummary() {
+		return this.summary;
 	}
 
 	/**
 	 * 
-	 * @param years
+	 * @param summary
 	 */
-	public void setYears(int years) {
-		this.years = years;
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
-	public String getPublication() {
-		return this.publication;
+	public int getYear() {
+		return this.year;
 	}
 
 	/**
 	 * 
-	 * @param publication
+	 * @param year
 	 */
-	public void setPublication(String publication) {
-		this.publication = publication;
-	}
-
-	public float getPrice() {
-		return this.price;
-	}
-
-	/**
-	 * 
-	 * @param price
-	 */
-	public void setPrice(float price) {
-		this.price = price;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 }
