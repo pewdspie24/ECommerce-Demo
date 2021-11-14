@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import model.customer.Customer;
 import model.customer.Fullname;
 
-public class FullnameDAOImp {
+public class FullnameDAOImp implements FullnameDAO{
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
@@ -49,7 +49,7 @@ public class FullnameDAOImp {
         }
 	}
 
-	public void updatePhone(Customer cus, Fullname fn) {
+	public void updateFN(Customer cus, Fullname fn) {
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FN_SQL);) {
         	preparedStatement.setString(1, fn.getFirstName());
         	preparedStatement.setString(2, fn.getLastName());

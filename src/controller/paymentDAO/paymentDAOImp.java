@@ -11,7 +11,7 @@ import java.util.List;
 import model.book.Book;
 import model.payment.Payment;
 
-public class paymentDAOImp implements paymentDAO {
+public class PaymentDAOImp implements PaymentDAO {
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/bookstoremanagement?useSSL=false";
     private String jdbcUsername = "root";

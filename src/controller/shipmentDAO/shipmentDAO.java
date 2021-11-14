@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.shipment.Shipment;
 
-public interface shipmentDAO {
+public interface ShipmentDAO {
 
 	void insertShipmentMethod();
 

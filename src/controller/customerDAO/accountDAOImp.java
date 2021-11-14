@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import model.customer.Account;
 import model.customer.Customer;
 
-public class accountDAOImp implements accountDAO {
+public class AccountDAOImp implements AccountDAO {
 
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";

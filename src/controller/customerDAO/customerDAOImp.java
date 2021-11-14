@@ -12,7 +12,7 @@ import model.customer.Customer;
 import model.customer.Fullname;
 import model.customer.Phone;
 
-public class customerDAOImp implements customerDAO {
+public class CustomerDAOImp implements CustomerDAO {
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";

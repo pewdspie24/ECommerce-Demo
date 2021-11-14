@@ -4,7 +4,7 @@ import model.customer.Account;
 import model.customer.Address;
 import model.customer.Customer;
 
-public interface customerDAO {
+public interface CustomerDAO {
 
 	void updateCustomer(Customer customer);
 

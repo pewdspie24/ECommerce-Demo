@@ -3,7 +3,7 @@ package controller.customerDAO;
 import model.customer.Account;
 import model.customer.Customer;
 
-public interface accountDAO {
+public interface AccountDAO {
 	
 	public void createAccount(Customer cus);
 	

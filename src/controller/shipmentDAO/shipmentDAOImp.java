@@ -11,7 +11,7 @@ import java.util.List;
 import model.payment.Payment;
 import model.shipment.Shipment;
 
-public class shipmentDAOImp implements shipmentDAO {
+public class ShipmentDAOImp implements ShipmentDAO {
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/bookstoremanagement?useSSL=false";
     private String jdbcUsername = "root";

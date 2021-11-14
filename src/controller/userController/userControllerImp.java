@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.bookDAO.bookDAOImp;
+import controller.bookDAO.BookDAOImp;
 import controller.bookitemDAO.bookitemDAOImp;
 import controller.cartDAO.cartDAOImp;
 import controller.customerDAO.accountDAO;
@@ -18,9 +18,9 @@ import controller.customerDAO.accountDAOImp;
 import controller.customerDAO.addressDAOImp;
 import controller.customerDAO.customerDAOImp;
 import controller.orderDAO.orderDAOImp;
-import controller.paymentDAO.paymentDAO;
-import controller.paymentDAO.paymentDAOImp;
-import controller.shipmentDAO.shipmentDAOImp;
+import controller.paymentDAO.PaymentDAO;
+import controller.paymentDAO.PaymentDAOImp;
+import controller.shipmentDAO.ShipmentDAOImp;
 import model.book.Book;
 import model.bookitem.Bookitem;
 import model.cart.Cart;
@@ -37,14 +37,14 @@ public class userControllerImp extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private boolean isLogin = false;
-	private bookDAOImp bookdao;
+	private BookDAOImp bookdao;
 	private accountDAOImp accountdao;
 	private addressDAOImp addressdao;
 	private customerDAOImp customerdao;
 	private bookitemDAOImp bookitemdao;
 	private cartDAOImp cartdao;
-	private paymentDAOImp pmdao;
-	private shipmentDAOImp smdao;
+	private PaymentDAOImp pmdao;
+	private ShipmentDAOImp smdao;
 	private orderDAOImp orderdao;
 	private int cusID;
     /**
@@ -162,7 +162,7 @@ public class userControllerImp extends HttpServlet {
 			response.sendRedirect("login.jsp");
 		}
 		else{
-			bookdao = new bookDAOImp();
+			bookdao = new BookDAOImp();
 			List<Book> listBook = bookdao.findAllBook();
 //			System.out.print(listBook);s
 	        request.setAttribute("listBook", listBook);
@@ -177,7 +177,7 @@ public class userControllerImp extends HttpServlet {
         System.out.print(id);
         System.out.print(numbers);
         bookitemdao = new bookitemDAOImp();
-        bookdao = new bookDAOImp();
+        bookdao = new BookDAOImp();
         cartdao = new cartDAOImp();
         int cartID = cartdao.findCart(this.cusID).getID();
         if(bookitemdao.checkItem(cartID, id)){
@@ -210,8 +210,8 @@ public class userControllerImp extends HttpServlet {
 	}
 
 	public void selectShipPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		pmdao = new paymentDAOImp();
-		smdao = new shipmentDAOImp();
+		pmdao = new PaymentDAOImp();
+		smdao = new ShipmentDAOImp();
 		List<Payment> listPayment = pmdao.findAllPayment();
 		List<Shipment> listShipment = smdao.findAllShipment();
 		request.setAttribute("listPayment", listPayment);
