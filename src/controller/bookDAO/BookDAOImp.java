@@ -48,20 +48,50 @@ public class BookDAOImp implements BookDAO {
         return connection;
     }
     
-	public void insertBook() {
-		// TODO - implement bookDAOImp.insertBook
-		throw new UnsupportedOperationException();
-	}
+	// public void insertBook(String title, String author, int years, String publication, float price) {
+	// 	 try (Connection connection = getConnection();
+	// 	            // Step 2:Create a statement using connection object
+	// 	            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOOK);) {
+	// 		 		preparedStatement.setString(1, title);
+	// 		 		preparedStatement.setString(2, author);
+	// 		 		preparedStatement.setInt(3, years);
+	// 		 		preparedStatement.setString(4, publication);
+	// 		 		preparedStatement.setFloat(5, price);
+	// 	            System.out.println(preparedStatement);
+	// 	            int row = preparedStatement.executeUpdate();
+	//         } catch (SQLException e) {
+	//             e.printStackTrace();
+	//         }
+	// }
 
-	public void deleteBook() {
-		// TODO - implement bookDAOImp.deleteBook
-		throw new UnsupportedOperationException();
-	}
+	// public void deleteBook(int id) {
+	// 	try (Connection connection = getConnection();
+	//             // Step 2:Create a statement using connection object
+	//             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK);) {
+	// 	 		preparedStatement.setInt(1, id);
+	//             System.out.println(preparedStatement);
+	//             int row = preparedStatement.executeUpdate();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+	// }
 
-	public void updateBook() {
-		// TODO - implement bookDAOImp.updateBook
-		throw new UnsupportedOperationException();
-	}
+	// public void updateBook(int id, String title, String author, int years, String publication, float price) {
+	// 	 try (Connection connection = getConnection();
+	// 	            // Step 2:Create a statement using connection object
+	// 	            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOK);) {
+	// 		 		preparedStatement.setString(1, title);
+	// 		 		preparedStatement.setString(2, author);
+	// 		 		preparedStatement.setInt(3, years);
+	// 		 		preparedStatement.setString(4, publication);
+	// 		 		preparedStatement.setFloat(5, price);
+	// 		 		preparedStatement.setInt(6, id);
+	// 	            System.out.println(preparedStatement);
+	// 	            int row = preparedStatement.executeUpdate();
+	//         } catch (SQLException e) {
+	//             e.printStackTrace();
+	//         }
+	// }
 	
 	public Publisher getPublisher(int ID) {
     	Publisher pub = null;

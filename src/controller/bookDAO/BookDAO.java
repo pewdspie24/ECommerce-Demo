@@ -9,11 +9,11 @@ import model.book.Magazine;
 
 public interface BookDAO {
 
-	void insertBook();
+	// void insertBook(String title, String author, int years, String publication, float price);
 
-	void deleteBook();
+	// void deleteBook(int id);
 
-	void updateBook();
+	// void updateBook(int id, String title, String author, int years, String publication, float price);
 
 	public List <Comics> findAllComics();
 	
