@@ -15,7 +15,7 @@ public class addressDAOImp implements addressDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ADD_SQL = "INSERT INTO address" + "  (number, city, district, street) VALUES " +" (?, ?, ?, ?);";
+    private static final String INSERT_ADD_SQL = "INSERT INTO address" + "  (customerID, number, city, district, street) VALUES " +" (?, ?, ?, ?, ?);";
     private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where customerID =?";
     private static final String DELETE_ADD_SQL = "delete from address where customerID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM address;";
@@ -39,10 +39,11 @@ public class addressDAOImp implements addressDAO {
 		System.out.println(INSERT_ADD_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADD_SQL)) {
-        	preparedStatement.setString(1, cus.getAddress().getNumber());
-            preparedStatement.setString(2, cus.getAddress().getCity());
-            preparedStatement.setString(3, cus.getAddress().getDistrict());
-            preparedStatement.setString(3, cus.getAddress().getStreet());
+        	preparedStatement.setInt(1, cus.getID());
+        	preparedStatement.setString(2, cus.getAddress().getNumber());
+            preparedStatement.setString(3, cus.getAddress().getCity());
+            preparedStatement.setString(4, cus.getAddress().getDistrict());
+            preparedStatement.setString(5, cus.getAddress().getStreet());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

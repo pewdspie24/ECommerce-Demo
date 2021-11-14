@@ -1,0 +1,36 @@
+book:
+2 -> LN
+3 -> Comic
+4 -> Magazine
+elec:
+2 -> Mobile
+3 -> Laptop
+4 -> Computer
+clothes:
+2 -> Shirt
+3 -> Jeans
+4 -> Short
+shoe:
+2 -> Sneaker (Deo biet dung k)
+3 -> Boot
+4 -> Sandal (Same)
+
+Voucher:
+2 -> Constant
+3 -> Percen
+
+Shipment:
+2 -> Fast
+3 ->  Eco
+4 -> Abroad
+
+Payment:
+2 -> Cash
+3 -> Check
+4 -> Credit
+
+xóa variant + color + size
+cart-order asso, đưa cartid về order, xóa FK OrderID
+bill-order asso, đưa orderid về billonline, xóa FK BillID
+tất cả book, clothes, elec, shoe vs item asso
+1 cus nhiều cart
