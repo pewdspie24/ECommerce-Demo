@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 import controller.cartDAO.cartDAOImp;
 import controller.customerDAO.customerDAOImp;
-import controller.paymentDAO.paymentDAOImp;
-import controller.shipmentDAO.shipmentDAOImp;
+import controller.paymentDAO.PaymentDAOImp;
+import controller.shipmentDAO.ShipmentDAOImp;
 import model.cart.Cart;
 import model.customer.Customer;
 import model.order.Order;
@@ -95,9 +95,9 @@ public class orderDAOImp implements orderDAO {
                 int totalDiscount = rs.getInt("TotalDiscount");
                 String dateTime = rs.getString("DateTime");
                 customerDAOImp cusdao = new customerDAOImp();
-                shipmentDAOImp shipdao = new shipmentDAOImp();
+                ShipmentDAOImp shipdao = new ShipmentDAOImp();
                 cartDAOImp cartdao = new cartDAOImp();
-                paymentDAOImp paydao = new paymentDAOImp();
+                PaymentDAOImp paydao = new PaymentDAOImp();
                 Customer customer = cusdao.viewCustomer(customerID);
                 Cart cart = cartdao.findCart(customerID);
                 Shipment shipment = shipdao.selectShipment(shipmentID);

@@ -14,7 +14,7 @@ import model.book.LightNovel;
 import model.book.Magazine;
 import model.book.Publisher;
 
-public class bookDAOImp implements bookDAO {
+public class BookDAOImp implements BookDAO {
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
@@ -31,7 +31,7 @@ public class bookDAOImp implements bookDAO {
     private static final String SELECT_ALL_MAGAZINES = "select * from book where id4 is not null;";
     private static final String SELECT_PUB_BY_ID = "select * from publisher where id =?";
     
-    public bookDAOImp() {}
+    public BookDAOImp() {}
     
     protected Connection getConnection() {
         Connection connection = null;

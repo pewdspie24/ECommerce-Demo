@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.payment.Payment;
 
-public interface paymentDAO {
+public interface PaymentDAO {
 
 	void insertPaymentMethod();
 

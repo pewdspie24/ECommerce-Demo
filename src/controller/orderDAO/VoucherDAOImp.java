@@ -12,7 +12,7 @@ import model.order.VoucherConstant;
 import model.order.VoucherPercentage;
 
 
-public class VoucherDAOImp {
+public class VoucherDAOImp implements VoucherDAO{
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";

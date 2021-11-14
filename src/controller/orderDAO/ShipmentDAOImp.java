@@ -12,7 +12,7 @@ import model.order.AbroadShipment;
 import model.order.EconomicalShipment;
 import model.order.FastShipment;
 
-public class ShipmentDAOImp {
+public class ShipmentDAOImp implements ShipmentDAO{
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";

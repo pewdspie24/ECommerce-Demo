@@ -58,16 +58,16 @@
                         <ul class="list-group">
                             <li class="list-group-item"><a href="index.jsp" style="color: #000;">All product</a></li>
                             <li class="list-group-item"><a href="BookIndex.jsp" style="color: #000;">Book</a></li>
-                            <li class="list-group-item active"><a href="ShoesIndex.jsp" style="color: #000;">Shoes</a></li>
+                            <li class="list-group-item"><a href="ShoesIndex.jsp" style="color: #000;">Shoes</a></li>
                             <li class="list-group-item"><a href="ElectronicIndex.jsp" style="color: #000;">Electronic</a></li>
-                            <li class="list-group-item"><a href="ClothesIndex.jsp" style="color: #000;">Clothes</a></li>
+                            <li class="list-group-item active"><a href="ClothesIndex.jsp" style="color: #000;">Clothes</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-9">
                     <div class="row">
-                        <c:forEach items="${listShoesProducts}" var="o">
+                        <c:forEach items="${listClothesProducts}" var="o">
                             <div class="col-12">
                                 <div class="card">
                                     <img class="card-img-top" src="${o.image}" alt="img product">

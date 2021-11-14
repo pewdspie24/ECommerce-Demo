@@ -7,7 +7,7 @@ import model.book.Comics;
 import model.book.LightNovel;
 import model.book.Magazine;
 
-public interface bookDAO {
+public interface BookDAO {
 
 	// void insertBook(String title, String author, int years, String publication, float price);
 
