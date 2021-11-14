@@ -91,7 +91,6 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
                                     <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
                                 </div>
                             </div>

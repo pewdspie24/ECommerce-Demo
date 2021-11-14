@@ -60,171 +60,31 @@
                             <li class="list-group-item"><a href="BookIndex.jsp" style="color: #000;">Book</a></li>
                             <li class="list-group-item active"><a href="ShoesIndex.jsp" style="color: #000;">Shoes</a></li>
                             <li class="list-group-item"><a href="ElectronicIndex.jsp" style="color: #000;">Electronic</a></li>
+                            <li class="list-group-item"><a href="ClothesIndex.jsp" style="color: #000;">Clothes</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-9">
                     <div class="row">
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                        <c:forEach items="${listShoesProducts}" var="o">
+                            <div class="col-12">
+                                <div class="card">
+                                    <img class="card-img-top" src="${o.image}" alt="img product">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><a href="#" title="View Product">${o.type}</a></h4>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="btn btn-danger btn-block">${o.price} price$</p>
+                                            </div>
+                                            <div class="col">
+                                                <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-top: 46px;">
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" style="margin-top: 46px;">
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="card">
-                                <img class="card-img-top" src="" alt="sản phẩm">
-                                <div class="card-body">
-                                    <h4 class="card-title text-center"><a href="#">Cô bé bán diêm</a></h4>
-                                    <p class="card-text text-center">Price</p>
-                                    <div class="row">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
 
