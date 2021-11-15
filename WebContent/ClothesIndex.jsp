@@ -72,7 +72,7 @@
                                 <div class="card">
                                     <img class="card-img-top" src="${o.image}" alt="img product">
                                     <div class="card-body">
-                                        <h4 class="card-title"><a href="#" title="View Product">${o.type}</a></h4>
+                                        <h4 class="card-title"><a href="productDetail.jsp" title="View Product">${o.type}</a></h4>
                                         <div class="row">
                                             <div class="col">
                                                 <p class="btn btn-danger btn-block">${o.price} price$</p>

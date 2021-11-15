@@ -73,9 +73,9 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="card-body p-5">
-                                    <h3 class="title mb-3">Tên để đây${p.name}</h3>
+                                    <h3 class="title mb-3">${p.name}</h3>
                                     <p class="price-detail text-warning">
-                                        <i class="fas fa-dollar-sign"></i>giá để đây ${p.price}
+                                        <i class="fas fa-dollar-sign"></i>${p.price}
                                     </p>
                                     <hr>
                                     <div class="row">
