@@ -5,10 +5,11 @@ import java.util.List;
 import model.order.Check;
 import model.order.Cash;
 import model.order.Credit;
+import model.order.Payment;
 
 public interface PaymentDAO {
 
-	void getShipment();
+	public Payment getPaymentByID(int ID);
 
 	void createPayment();
 

@@ -11,6 +11,7 @@ import java.util.List;
 import model.order.AbroadShipment;
 import model.order.EconomicalShipment;
 import model.order.FastShipment;
+import model.order.Shipment;
 
 public class ShipmentDAOImp implements ShipmentDAO{
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
@@ -26,6 +27,7 @@ public class ShipmentDAOImp implements ShipmentDAO{
     private static final String SELECT_ALL_FASTS = "select * from shipment where id2 is not null;";
     private static final String SELECT_ALL_ECOS = "select * from shipment where id3 is not null;";
     private static final String SELECT_ALL_ABROADS = "select * from shipment where id4 is not null;";
+    private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?";
     
     public ShipmentDAOImp() {}
     
@@ -56,6 +58,30 @@ public class ShipmentDAOImp implements ShipmentDAO{
 	public void updateShipment() {
 		// TODO - implement ShipmentDAOImp.updateShipment
 		throw new UnsupportedOperationException();
+	}
+	
+	public Shipment getShipmentByID(int ID) {
+		Shipment man = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SHIPMENT_BY_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int iD = rs.getInt("ID");
+                float price = rs.getFloat("price");
+                String description = rs.getString("description");
+                man = new Shipment(iD, price, description);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return man;
 	}
 	
 	public List <EconomicalShipment> findAllEconomicalShipment() {

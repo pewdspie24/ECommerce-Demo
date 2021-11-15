@@ -11,6 +11,7 @@ import java.util.List;
 import model.order.Cash;
 import model.order.Check;
 import model.order.Credit;
+import model.order.Payment;
 import model.order.Shipment;
 import model.order.Voucher;
 
@@ -31,6 +32,7 @@ public class PaymentDAOImp implements PaymentDAO {
     private static final String SELECT_ALL_CREDITS = "select * from payment where id4 is not null;";
     private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?";
     private static final String SELECT_VOUCHER_BY_ID = "select * from Voucher where id =?";
+    private static final String SELECT_PAYMENT_BY_ID = "select * from payment where id =?";
 
 	public void getShipment() {
 		// TODO - implement PaymentDAOImp.getShipment
@@ -63,6 +65,33 @@ public class PaymentDAOImp implements PaymentDAO {
         }
         return connection;
     }
+	
+	public Payment getPaymentByID(int ID) {
+		Payment pay = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PAYMENT_BY_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int iD = rs.getInt("ID");
+                float amount = rs.getFloat("amount");
+                int shipmentID = rs.getInt("shipmentID");
+                int voucherID = rs.getInt("voucherID");
+                Shipment shipment = getShipmentByID(shipmentID);
+                Voucher voucher = getVoucherByID(voucherID);
+                pay = new Payment(iD, amount, shipment, voucher);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pay;
+	}
 	
 	public Shipment getShipmentByID(int ID) {
 		Shipment man = null;

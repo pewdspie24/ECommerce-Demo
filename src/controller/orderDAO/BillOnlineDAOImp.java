@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.customerDAO.CustomerDAOImp;
-import controller.orderDAO.PaymentDAOImp;
 import model.customer.Customer;
+import model.order.BillOnline;
 import model.order.Cart;
 import model.order.Order;
 import model.order.Payment;
 
-public class OrderDAOImp implements OrderDAO {
-
+public class BillOnlineDAOImp implements BillOnlineDAO{
+	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-	private static final String SELECT_ORDER_BY_ID = "select * from `order` where id =?";
-    private static final String SELECT_ALL_ORDERS = "select * from `order`";
-    private static final String INSERT_ORDER_SQL = "INSERT INTO `order`" + "  (cartID, paymentID, customerID, date) VALUES " +" (?, ?, ?, ?);";
-    private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM `order`;";
+	private static final String SELECT_BILL_BY_ID = "select * from billonline where id =?";
+    private static final String SELECT_ALL_BILLS = "select * from billonline";
+    private static final String INSERT_BILL_SQL = "INSERT INTO billonline" + "  (customerID, orderID, totalPrice, dateCreate, totalDiscount) VALUES " +" (?, ?, ?, ?, ?);";
+    private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM billonline;";
     
     protected Connection getConnection() {
         Connection connection = null;
@@ -40,7 +40,6 @@ public class OrderDAOImp implements OrderDAO {
         }
         return connection;
     }
-    
     public int getMaxID(){
 		int id = 0;
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MAX_ID)) {
@@ -55,14 +54,16 @@ public class OrderDAOImp implements OrderDAO {
 		return id;
 	}
     
-	public void insertOrder(Order ord) {
-		System.out.println(INSERT_ORDER_SQL);
+    
+	public void insertBill(BillOnline bill) {
+		System.out.println(INSERT_BILL_SQL);
         // try-with-resource statement will auto close the connection.
-        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ORDER_SQL)) {
-        	preparedStatement.setInt(1, ord.getCart().getID());
-            preparedStatement.setInt(2, ord.getPayment().getID());
-            preparedStatement.setInt(3, ord.getCustomer().getID());
-            preparedStatement.setString(4, ord.getDate());
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BILL_SQL)) {
+        	preparedStatement.setInt(1, bill.getCustomer().getID());
+            preparedStatement.setInt(2, bill.getOrder().getID());
+            preparedStatement.setFloat(3, bill.getTotalPrice());
+            preparedStatement.setString(4, bill.getDateCreate());
+            preparedStatement.setFloat(5, bill.getTotalDiscount());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -70,12 +71,12 @@ public class OrderDAOImp implements OrderDAO {
         }
 	}
 	
-	public Order getOrder(int ID) {
-		Order order = null;
+	public BillOnline getBill(int ID) {
+		BillOnline bill = null;
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
             // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BILL_BY_ID);) {
             preparedStatement.setInt(1, ID);
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
@@ -83,30 +84,29 @@ public class OrderDAOImp implements OrderDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-                int cardID = rs.getInt("CartID");
-                int paymentID = rs.getInt("PaymentID");
                 int customerID = rs.getInt("CustomerID");
-                String date = rs.getString("Date");
+                int orderID = rs.getInt("orderID");
+                float totalPrice = rs.getFloat("totalPrice");
+                String dateCreate = rs.getString("DateCreate");
+                float totalDiscount = rs.getFloat("totalDiscount");
                 CustomerDAOImp cusdao = new CustomerDAOImp();
-                CartDAOImp cartdao = new CartDAOImp();
-                PaymentDAOImp paydao = new PaymentDAOImp();
+                OrderDAOImp orderdao = new OrderDAOImp();
                 Customer customer = cusdao.viewCustomer(customerID);
-                Cart cart = cartdao.findCart(customerID);
-                Payment payment = paydao.getPaymentByID(paymentID);
-                order = new Order(ID, cart, payment, customer, date);
+                Order order = orderdao.getOrder(orderID);
+                bill = new BillOnline(ID, customer, order, totalPrice, dateCreate, totalDiscount);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return order;
+        return bill;
 	}
 	
-	public List <Order> findAllOrder() {
-		List <Order> order = new ArrayList<>();
+	public List <BillOnline> findAllBill() {
+		List <BillOnline> bill = new ArrayList<>();
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
             // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDERS);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BILLS);) {
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
@@ -114,42 +114,20 @@ public class OrderDAOImp implements OrderDAO {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
             	int ID = rs.getInt("ID");
-                int cardID = rs.getInt("CartID");
-                int paymentID = rs.getInt("PaymentID");
-                int customerID = rs.getInt("CustomerID");
-                String date = rs.getString("Date");
+            	int customerID = rs.getInt("CustomerID");
+                int orderID = rs.getInt("orderID");
+                float totalPrice = rs.getFloat("totalPrice");
+                String dateCreate = rs.getString("DateCreate");
+                float totalDiscount = rs.getFloat("totalDiscount");
                 CustomerDAOImp cusdao = new CustomerDAOImp();
-                CartDAOImp cartdao = new CartDAOImp();
-                PaymentDAOImp paydao = new PaymentDAOImp();
+                OrderDAOImp orderdao = new OrderDAOImp();
                 Customer customer = cusdao.viewCustomer(customerID);
-                Cart cart = cartdao.findCart(customerID);
-                Payment payment = paydao.getPaymentByID(paymentID);
-                order.add(new Order(ID, cart, payment, customer, date));
+                Order order = orderdao.getOrder(orderID);
+                bill.add(new BillOnline(ID, customer, order, totalPrice, dateCreate, totalDiscount));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return order;
+        return bill;
 	}
-
-	public void getShipment() {
-		// TODO - implement orderDAOImp.getShipment
-		throw new UnsupportedOperationException();
-	}
-
-	public void getPayment() {
-		// TODO - implement orderDAOImp.getPayment
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCart() {
-		// TODO - implement orderDAOImp.getCart
-		throw new UnsupportedOperationException();
-	}
-
-	public void viewCustomer() {
-		// TODO - implement orderDAOImp.viewCustomer
-		throw new UnsupportedOperationException();
-	}
-
 }

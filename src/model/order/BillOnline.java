@@ -22,6 +22,14 @@ public class BillOnline {
 		this.totalDiscount = totalDiscount;
 	}
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	public int getID() {
 		return this.ID;
 	}

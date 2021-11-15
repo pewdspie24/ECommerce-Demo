@@ -1,14 +1,16 @@
 package controller.orderDAO;
 
+import java.util.List;
+
 import model.order.Order;
 
-public interface orderDAO {
+public interface OrderDAO {
 
 	public void insertOrder(Order ord);
 	
 	public Order getOrder(int ID);
 	
-	void findAllOrder();
+	public List <Order> findAllOrder();
 
 	void getShipment();
 

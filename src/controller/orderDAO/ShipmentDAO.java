@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.order.EconomicalShipment;
 import model.order.FastShipment;
+import model.order.Shipment;
 import model.order.AbroadShipment;
 
 public interface ShipmentDAO {
@@ -27,4 +28,6 @@ public interface ShipmentDAO {
 	public EconomicalShipment findEconomicalShipmentByID(int ID);
 	
 	public AbroadShipment findAbroadShipmentByID(int ID);
+	
+	public Shipment getShipmentByID(int ID);
 }
