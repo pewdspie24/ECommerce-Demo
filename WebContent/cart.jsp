@@ -346,7 +346,7 @@
         				<div class="list-main">
         					<div class="list-item">
         						<div style="width: 35%; box-sizing: border-box; position: relative; flex-direction: column; text-align: left;">
-        							<a class="item-name" href="#"> noice shit 1</a>
+        							<a class="item-name" href="#"> noice stuff 1</a>
         						</div>
         						<div style="width:15%; align-items: center; justify-content: center;">
         							25.00
@@ -365,7 +365,7 @@
         				<div class="list-main">
         					<div class="list-item">
         						<div style="width: 35%; box-sizing: border-box; position: relative; flex-direction: column; text-align: left;">
-        							<a class="item-name" href="#"> noice shit 2</a>
+        							<a class="item-name" href="#"> noice stuff 2</a>
         						</div>
         						<div style="width:15%; align-items: center; justify-content: center;">
         							30.00
