@@ -6,7 +6,7 @@ import model.customer.Customer;
 
 public interface CustomerDAO {
 
-	void updateCustomer(Customer customer);
+	void insertCustomer(Customer customer);
 
 	void findAllCustomer();
 

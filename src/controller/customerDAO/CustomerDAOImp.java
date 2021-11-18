@@ -18,12 +18,12 @@ public class CustomerDAOImp implements CustomerDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_CUS_SQL = "INSERT INTO customer" + "  (gender, birth, accountnum, ID3, CardID, Date2, ID2, Date) VALUES " +" (?, ?, ?, NULL, NULL, NULL, NULL, NULL);";
-    private static final String SELECT_CUS_BY_ID = "select ID, gender, birth, accountnum, ID3, CardID, Date2, ID2, Date from customer where ID =?";
-    private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where customerID =?";
-    private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where customerID =?";
-    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where customerID =?";
-    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where customerID =?";
+    private static final String INSERT_CUS_SQL = "INSERT INTO customer" + "  (gender, birth, accountnum, ID3, CardID, Date2, ID2, Date, accountID, addressID, phoneID, fullnameID) VALUES " +" (?, ?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?, ?, ?);";
+    private static final String SELECT_CUS_BY_ID = "select * from customer where ID =?";
+    private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where ID =?";
+    private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where ID =?";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where ID =?";
+    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where IID =?";
     private static final String SELECT_CUS_BY_ACC_ID = "select * from customer where accountID =?";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM customer;";
     
@@ -42,13 +42,17 @@ public class CustomerDAOImp implements CustomerDAO {
         return connection;
     }
     
-	public void updateCustomer(Customer customer) {
+	public void insertCustomer(Customer customer) {
 		System.out.println(INSERT_CUS_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CUS_SQL)) {
             preparedStatement.setString(1, customer.getGender());
             preparedStatement.setString(2, customer.getBirth());
             preparedStatement.setString(3, customer.getAccountNum());
+            preparedStatement.setInt(4, customer.getAccount().getID());
+            preparedStatement.setInt(5, customer.getAddress().getID());
+            preparedStatement.setInt(6, customer.getPhone().getID());
+            preparedStatement.setInt(7, customer.getFullname().getID());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -79,14 +83,18 @@ public class CustomerDAOImp implements CustomerDAO {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-            	String	gender = rs.getString("gender");
-            	Account account = getAccount(ID);
+            	String gender = rs.getString("gender");
             	String	birth = rs.getString("birth");
-            	Address address = getAddress(ID);
                 String accountNum = rs.getString("accountnum");
-                Phone phone = getPhone(ID);
-                Fullname fullname = getFN(ID);
-                customer = new Customer(1, accountNum, gender, birth, account, fullname, phone, address);
+            	int accountID = rs.getInt("accountID");
+            	int addressID = rs.getInt("addressID");
+            	int phoneID = rs.getInt("phoneID");
+            	int fullnameID = rs.getInt("fullnameID");
+            	Account account = getAccount(accountID);
+            	Address address = getAddress(addressID);
+            	Phone phone = getPhone(phoneID);
+                Fullname fullname = getFN(fullnameID);
+                customer = new Customer(ID, accountNum, gender, birth, account, address, phone, fullname);
             }
         } catch (SQLException e) {
             e.printStackTrace();

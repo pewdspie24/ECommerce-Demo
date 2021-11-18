@@ -15,9 +15,9 @@ public class PhoneDAOImp implements PhoneDAO{
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_PHO_SQL = "INSERT INTO PHONE" + "  (customerID, statesNo, number) VALUES " +" (?, ?, ?);";
-    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where customerID =?";
-    private static final String UPDATE_PHO_SQL = "UPDATE phone set statesno = ?, number = ? where customerID  = ?;";
+    private static final String INSERT_PHO_SQL = "INSERT INTO PHONE" + "  (statesNo, number) VALUES " +" (?, ?);";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where ID =?";
+    private static final String UPDATE_PHO_SQL = "UPDATE phone set statesno = ?, number = ? where ID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM phone;";
 
     protected Connection getConnection() {

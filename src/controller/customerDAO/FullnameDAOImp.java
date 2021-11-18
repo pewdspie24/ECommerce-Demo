@@ -15,9 +15,9 @@ public class FullnameDAOImp implements FullnameDAO{
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (customerID, firstName, lastName) VALUES " +" (?, ?, ?);";
-    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where customerID =?";
-    private static final String UPDATE_FN_SQL = "UPDATE fullname set firstName = ?, lastName = ? where customerID  = ?;";
+    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (firstName, lastName) VALUES " +" (?, ?);";
+    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where ID =?";
+    private static final String UPDATE_FN_SQL = "UPDATE fullname set firstName = ?, lastName = ? where ID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM fullname;";
 
     protected Connection getConnection() {
@@ -35,13 +35,12 @@ public class FullnameDAOImp implements FullnameDAO{
         return connection;
     }
     
-	public void createFN(Customer cus) {
+	public void createFN(Fullname fullname) {
 		System.out.println(INSERT_FN_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FN_SQL)) {
-        	preparedStatement.setInt(1, cus.getID());
-            preparedStatement.setString(2, cus.getFullname().getFirstName());
-            preparedStatement.setString(3, cus.getFullname().getLastName());
+            preparedStatement.setString(1, fullname.getFirstName());
+            preparedStatement.setString(2, fullname.getLastName());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -49,11 +48,11 @@ public class FullnameDAOImp implements FullnameDAO{
         }
 	}
 
-	public void updateFN(Customer cus, Fullname fn) {
+	public void updateFN(Fullname fn) {
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FN_SQL);) {
         	preparedStatement.setString(1, fn.getFirstName());
         	preparedStatement.setString(2, fn.getLastName());
-        	preparedStatement.setInt(3, cus.getID());
+        	preparedStatement.setInt(3, fn.getID());
         	System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
