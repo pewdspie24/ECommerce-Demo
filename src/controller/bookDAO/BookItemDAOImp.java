@@ -167,7 +167,7 @@ public class BookItemDAOImp implements BookItemDAO {
         return books;
 	}
 	
-	public List <BookItem> findAllLNItem() {
+	public List <BookItem> findAllLightNovelItem() {
 		List < BookItem > books = new ArrayList < > ();
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();

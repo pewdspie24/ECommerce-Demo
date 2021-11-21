@@ -12,7 +12,7 @@ import model.electronic.Electronic;
 import model.electronic.ElectronicItem;
 import model.electronic.ManufacturerElectronics;
 
-public class ElectronicIItemDAOImp implements ElectronicItemDAO {
+public class ElectronicItemDAOImp implements ElectronicItemDAO {
 	
 	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
     private String jdbcUsername = "root";
@@ -27,7 +27,7 @@ public class ElectronicIItemDAOImp implements ElectronicItemDAO {
     private static final String SELECT_NUM_BY_ID = "select quantity from electronicitem where ID = ?";
     private static final String SELECT_MAN_BY_ID = "select * from ManufacturerElectronics where id =?";
     
-	public ElectronicIItemDAOImp() {}
+	public ElectronicItemDAOImp() {}
 
 	public void addElectronicItem() {
 		// TODO - implement ElectronicIItemDAOImp.addElectronicItem

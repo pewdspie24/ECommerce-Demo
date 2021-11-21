@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.customer.Customer;
 import model.customer.Fullname;
 
 public class FullnameDAOImp implements FullnameDAO{
@@ -15,7 +14,7 @@ public class FullnameDAOImp implements FullnameDAO{
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (firstName, lastName) VALUES " +" (?, ?);";
+    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (id, firstName, lastName) VALUES " +" (?,?, ?);";
     private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where ID =?";
     private static final String UPDATE_FN_SQL = "UPDATE fullname set firstName = ?, lastName = ? where ID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM fullname;";
@@ -35,12 +34,13 @@ public class FullnameDAOImp implements FullnameDAO{
         return connection;
     }
     
-	public void createFN(Fullname fullname) {
+	public void createFullName(Fullname fullname) {
 		System.out.println(INSERT_FN_SQL);
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FN_SQL)) {
-            preparedStatement.setString(1, fullname.getFirstName());
-            preparedStatement.setString(2, fullname.getLastName());
+            preparedStatement.setInt(1, fullname.getID());
+            preparedStatement.setString(2, fullname.getFirstName());
+            preparedStatement.setString(3, fullname.getLastName());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -48,11 +48,11 @@ public class FullnameDAOImp implements FullnameDAO{
         }
 	}
 
-	public void updateFN(Fullname fn) {
+	public void updateFullName(Fullname fullname) {
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FN_SQL);) {
-        	preparedStatement.setString(1, fn.getFirstName());
-        	preparedStatement.setString(2, fn.getLastName());
-        	preparedStatement.setInt(3, fn.getID());
+        	preparedStatement.setString(1, fullname.getFirstName());
+        	preparedStatement.setString(2, fullname.getLastName());
+        	preparedStatement.setInt(3, fullname.getID());
         	System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -60,7 +60,7 @@ public class FullnameDAOImp implements FullnameDAO{
         }
 	}
 
-	public Fullname getFN(int ID) {
+	public Fullname getFullName(int ID) {
 		Fullname fn = null;
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();

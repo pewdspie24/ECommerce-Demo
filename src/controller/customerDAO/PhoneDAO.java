@@ -1,15 +1,14 @@
 package controller.customerDAO;
 
-import model.customer.Customer;
 import model.customer.Phone;
 
 public interface PhoneDAO {
 
-	public void createPhone(Customer cus);
+	public void createPhone(Phone phone);
 	
 	public Phone getPhone(int ID);
 	
 	public int getMaxID();
 	
-	public void updatePhone(Customer cus, Phone pho);
+	public void updatePhone(Phone phone);
 }
