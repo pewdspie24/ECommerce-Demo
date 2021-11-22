@@ -107,10 +107,11 @@ public class userControllerImp extends HttpServlet {
 		Cookie cookie = getCookie(request, "user");
 		if (cookie != null) {
 			String username = cookie.getValue();
-		
+
 			try {
 				return Integer.parseInt(username);
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 		}
 		return 0;
 	}
@@ -134,6 +135,22 @@ public class userControllerImp extends HttpServlet {
 			case "/addbook":
 				addBookItem(request, response);
 				break;
+			case "/addshoes":
+				addShoesItem(request, response);
+				break;
+			case "/addelectronic":
+				addElectronicItem(request, response);
+				break;
+			case "/addclothes":
+				addClothesItem(request, response);
+				break;
+			case "/addcart":
+				addCart(request, response);
+				break;
+			case "/showcart":
+				showCart(request, response);
+				break;
+			case "/deletecart":
 			case "/cart":
 				showCart(request, response);
 				break;
@@ -184,13 +201,14 @@ public class userControllerImp extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String birth = request.getParameter("birth");
 		String accountNum = request.getParameter("accountNum");
-		
+
 		String now = timeFormat.format(new Date());
-		Account account = new Account(accountDAO.getMaxID()+1, email, password, now);
-		Phone phone = new Phone(phoneDAO.getMaxID()+1, stateNo, phoneNumber);
-		Fullname fullname = new Fullname(fullnameDAO.getMaxID()+1, firstName, lastName);
-		Address address = new Address(addressDAO.getMaxID()+1, houseNo, street, district, city);
-		Customer customer = new Customer(customerDAO.getMaxID()+1, accountNum, gender, birth, account, fullname, phone, address);
+		Account account = new Account(accountDAO.getMaxID() + 1, email, password, now);
+		Phone phone = new Phone(phoneDAO.getMaxID() + 1, stateNo, phoneNumber);
+		Fullname fullname = new Fullname(fullnameDAO.getMaxID() + 1, firstName, lastName);
+		Address address = new Address(addressDAO.getMaxID() + 1, houseNo, street, district, city);
+		Customer customer = new Customer(customerDAO.getMaxID() + 1, accountNum, gender, birth, account, fullname,
+				phone, address);
 
 		accountDAO.createAccount(account);
 		phoneDAO.createPhone(phone);
@@ -260,11 +278,11 @@ public class userControllerImp extends HttpServlet {
 		int cartID = cartDAO.findCart(user).getID();
 		if (bookitemDAO.checkItem(cartID, id)) {
 			numbers = numbers + bookitemdao.getNum(cartID, id);
-			Bookitem bki = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
-			bookitemdao.updateBookItem(bki, numbers);
+			Bookitem bookItem = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
+			bookitemdao.updateBookItem(bookItem, numbers);
 		} else {
-			Bookitem bki = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
-			bookitemdao.insertBookItem(bki);
+			Bookitem bookItem = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
+			bookitemdao.insertBookItem(bookItem);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
 		dispatcher.forward(request, response);
@@ -272,8 +290,7 @@ public class userControllerImp extends HttpServlet {
 
 	public void showCart(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int user = 
-		bookitemdao = new bookitemDAOImp();
+		int user = bookitemdao = new bookitemDAOImp();
 		cartdao = new cartDAOImp();
 		List<Bookitem> listBook = bookitemdao.findAllBookitem(this.cusID);
 		float cartPrice = 0;
@@ -328,11 +345,13 @@ public class userControllerImp extends HttpServlet {
 	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
+
 		int accountID = accountDAO.getAccountID(email, password);
 		if (accountDAO.validateAccount(email, password)) {
-			this.customerId = customerDAO.getCusID(accountID);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
+			int customerId = customerDAO.getCustomerID(accountID);
+			Cookie cookie = new Cookie("customerId", String.valueOf(customerId));
+			response.addCookie(cookie);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
 		} else {
 			response.sendRedirect("loginfailed.jsp");
