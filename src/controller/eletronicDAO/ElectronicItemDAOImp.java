@@ -226,14 +226,14 @@ public class ElectronicItemDAOImp implements ElectronicItemDAO {
         return electronicitem;
 	}
 	
-	public List <ElectronicItem> getElectronicItemByID(int ID) {
-		List < ElectronicItem > electronicitem = new ArrayList < > ();
+    public List<ElectronicItem> getElectronicsItemByID(int ID) {
+        List<ElectronicItem> electronicitem = new ArrayList<>();
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
 
-            // Step 2:Create a statement using connection object
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EITEM_ID);) {
-        	preparedStatement.setInt(1, ID);
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EITEM_ID);) {
+            preparedStatement.setInt(1, ID);
             System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
@@ -253,5 +253,34 @@ public class ElectronicItemDAOImp implements ElectronicItemDAO {
             e.printStackTrace();
         }
         return electronicitem;
-	}
+    }
+
+    public ElectronicItem getElectronicItemByID(int ID) {
+        ElectronicItem electronicitem = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EITEM_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int iD = rs.getInt("ID");
+                int ElectronicID = rs.getInt("ElectronicID");
+                Electronic electronic = getElectronicByID(ElectronicID);
+                int quantity = rs.getInt("Quantity");
+                float price = rs.getFloat("price");
+                float discount = rs.getFloat("discount");
+                String date = rs.getString("date");
+                electronicitem =  (new ElectronicItem(iD, electronic, quantity, price, discount, date));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return electronicitem;
+    }
 }

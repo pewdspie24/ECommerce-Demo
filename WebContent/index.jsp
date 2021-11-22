@@ -90,8 +90,8 @@
                     <div class="card">
                         <img class="card-img-top" src="/image/book.jpg" alt="img product">
                         <div class="card-body">
-                            <h5 class="card-title">${product.title}</h5>
-                            <p class="card-text">${product.summary}</p>
+                            <h5 class="card-title">${product.book.title}</h5>
+                            <p class="card-text">${product.book.summary}</p>
                             <p class="card-text">${product.price}</p>
                             <a href="#" class="btn btn-primary">Add to Cart</a>
                         </div>

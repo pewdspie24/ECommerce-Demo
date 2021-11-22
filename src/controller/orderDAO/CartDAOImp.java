@@ -225,7 +225,7 @@ public class CartDAOImp implements CartDAO {
             preparedStatement.setString(2, cart.getCreatedAt());
             preparedStatement.setString(3, cart.getUpdatedAt());
             preparedStatement.setInt(4, cart.getTotalQuantity());
-            preparedStatement.setFloat(4, cart.getTotalPrice());
+            preparedStatement.setFloat(5, cart.getTotalPrice());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -238,7 +238,7 @@ public class CartDAOImp implements CartDAO {
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CART_BY_ID)) {
             preparedStatement.setFloat(1, price);
-            preparedStatement.setInt(1, quantity);
+            preparedStatement.setInt(2, quantity);
             preparedStatement.setInt(3, cart.getID());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
