@@ -14,7 +14,7 @@ public interface BookItemDAO {
 	
 	public List <BookItem> findAllComicsItem();
 	
-	public List <BookItem> findAllLNItem();
+	public List <BookItem> findAllLightNovelItem();
 	
 	public List <BookItem> findAllMagazineItem();
 	

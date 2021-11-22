@@ -5,7 +5,7 @@ import model.customer.Customer;
 
 public interface AccountDAO {
 	
-	public void createAccount(Customer cus);
+	public void createAccount(Account account);
 	
 	public Account getAccount(int ID);
 	
@@ -13,6 +13,6 @@ public interface AccountDAO {
 	
 	public int getMaxID();
 	
-	public int getAccID(String username, String password);
+	public int getAccountID(String username, String password);
 	
 }

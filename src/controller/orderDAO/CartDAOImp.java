@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.customerDAO.CustomerDAOImp;
-import javafx.util.Pair;
+import java.util.HashMap;
 import model.book.*;
 import model.clothes.*;
 import model.customer.Customer;
@@ -114,9 +114,9 @@ public class CartDAOImp implements CartDAO {
         }
 	}
 	
-	public List <Pair<Integer, Integer>> getBookItemIDList(int cartID) {
+	public List <HashMap<Integer, Integer>> getBookItemIDList(int cartID) {
 		// TODO - implement CartDAOImp.addBookitem
-		List <Pair<Integer, Integer>> bitem = new ArrayList <Pair <Integer,Integer> > ();
+		List <HashMap<Integer, Integer>> bitem = new ArrayList <HashMap <Integer,Integer> > ();
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
             // Step 2:Create a statement using connection object
@@ -131,7 +131,7 @@ public class CartDAOImp implements CartDAO {
                 int ID = rs.getInt("ID");
                 int bookitemID = rs.getInt("bookitemID");
                 int quantity = rs.getInt("quantity");
-                bitem.add(new Pair <Integer,Integer> (bookitemID, quantity));
+                bitem.add(new HashMap <Integer,Integer> (bookitemID, quantity));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -143,9 +143,9 @@ public class CartDAOImp implements CartDAO {
 	 * 
 	 * @param electronics
 	 */
-	public List <Pair<Integer, Integer>> getElectronicItemIDList(int cartID) {
+	public List <HashMap<Integer, Integer>> getElectronicItemIDList(int cartID) {
 		// TODO - implement CartDAOImp.addElectronicItem
-		List <Pair<Integer, Integer>> eitem = new ArrayList <Pair <Integer,Integer> > ();
+		List <HashMap<Integer, Integer>> eitem = new ArrayList <HashMap <Integer,Integer> > ();
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EITEM_CART)) {
 		            preparedStatement.setInt(1, cartID);
 		            System.out.println(preparedStatement);
@@ -157,7 +157,7 @@ public class CartDAOImp implements CartDAO {
 		                int ID = rs.getInt("ID");
 		                int elecitemID = rs.getInt("electronicitemID");
 		                int quantity = rs.getInt("quantity");
-		                eitem.add(new Pair <Integer,Integer> (elecitemID, quantity));
+		                eitem.add(new HashMap <Integer,Integer> (elecitemID, quantity));
 		            }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -169,9 +169,9 @@ public class CartDAOImp implements CartDAO {
 	 * 
 	 * @param clothes
 	 */
-	public List <Pair<Integer, Integer>> getClothesItemIDList(int cartID) {
+	public List <HashMap<Integer, Integer>> getClothesItemIDList(int cartID) {
 		// TODO - implement CartDAOImp.addClothesItem
-		List <Pair<Integer, Integer>> citem = new ArrayList <Pair <Integer,Integer> > ();
+		List <HashMap<Integer, Integer>> citem = new ArrayList <HashMap <Integer,Integer> > ();
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CITEM_CART)) {
 		            preparedStatement.setInt(1, cartID);
 		            System.out.println(preparedStatement);
@@ -183,7 +183,7 @@ public class CartDAOImp implements CartDAO {
 		                int ID = rs.getInt("ID");
 		                int clothesitemID = rs.getInt("clothesitemID");
 		                int quantity = rs.getInt("quantity");
-		                citem.add(new Pair <Integer,Integer> (clothesitemID, quantity));
+		                citem.add(new HashMap <Integer,Integer> (clothesitemID, quantity));
 		            }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -195,9 +195,9 @@ public class CartDAOImp implements CartDAO {
 	 * 
 	 * @param shoes
 	 */
-	public List <Pair<Integer, Integer>> getShoesItem(int cartID) {
+	public List <HashMap<Integer, Integer>> getShoesItem(int cartID) {
 		// TODO - implement CartDAOImp.addShoesItem
-		List <Pair<Integer, Integer>> sitem = new ArrayList <Pair <Integer,Integer> > ();
+		List <HashMap<Integer, Integer>> sitem = new ArrayList <HashMap <Integer,Integer> > ();
 		try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SITEM_CART)) {
 		            preparedStatement.setInt(1, cartID);
 		            System.out.println(preparedStatement);
@@ -209,7 +209,7 @@ public class CartDAOImp implements CartDAO {
 		                int ID = rs.getInt("ID");
 		                int shoesitemID = rs.getInt("clothesitemID");
 		                int quantity = rs.getInt("quantity");
-		                sitem.add(new Pair <Integer,Integer> (shoesitemID, quantity));
+		                sitem.add(new HashMap <Integer,Integer> (shoesitemID, quantity));
 		            }
         } catch (SQLException e) {
             e.printStackTrace();
