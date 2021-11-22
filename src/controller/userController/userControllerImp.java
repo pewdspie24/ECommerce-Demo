@@ -2,8 +2,11 @@ package controller.userController;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,6 +48,7 @@ import model.customer.Customer;
 import model.customer.Fullname;
 import model.customer.Phone;
 import model.electronic.ElectronicItem;
+import model.order.Cart;
 import model.shoes.Boot;
 import model.shoes.Sandal;
 import model.shoes.ShoesItem;
@@ -106,13 +110,13 @@ public class userControllerImp extends HttpServlet {
 		return null;
 	}
 
-	private int getUser(HttpServletRequest request) {
-		Cookie cookie = getCookie(request, "user");
+	private int getcustomerID(HttpServletRequest request) {
+		Cookie cookie = getCookie(request, "customerID");
 		if (cookie != null) {
-			String username = cookie.getValue();
+			String customerIDname = cookie.getValue();
 
 			try {
-				return Integer.parseInt(username);
+				return Integer.parseInt(customerIDname);
 			} catch (Exception e) {
 			}
 		}
@@ -132,6 +136,7 @@ public class userControllerImp extends HttpServlet {
 				break;
 			case "/loginform":
 				loginform(request, response);
+				break;
 			case "/logout":
 				logout(request, response);
 				break;
@@ -141,15 +146,15 @@ public class userControllerImp extends HttpServlet {
 			case "/addbook":
 				addBookItem(request, response);
 				break;
-			// case "/addshoes":
-			// 	addShoesItem(request, response);
-			// 	break;
-			// case "/addelectronic":
-			// 	addElectronicItem(request, response);
-			// 	break;
-			// case "/addclothes":
-			// 	addClothesItem(request, response);
-			// 	break;
+			case "/addshoes":
+				addShoesItem(request, response);
+				break;
+			case "/addelectronic":
+				addElectronicItem(request, response);
+				break;
+			case "/addclothes":
+				addClothesItem(request, response);
+				break;
 			// case "/addcart":
 			// 	addCart(request, response);
 			// 	break;
@@ -166,7 +171,7 @@ public class userControllerImp extends HttpServlet {
 			case "/order":
 				showOrder(request, response);
 				break;
-			case "/home":
+			case "/login":
 				login(request, response);
 				break;
 			default:
@@ -227,7 +232,7 @@ public class userControllerImp extends HttpServlet {
 	}
 
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Cookie cookie = new Cookie("user", "");
+		Cookie cookie = new Cookie("customerID", "");
 		response.addCookie(cookie);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
@@ -236,8 +241,8 @@ public class userControllerImp extends HttpServlet {
 	public void listBooks(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean requireLogin = false;
-		int user = getUser(request);
-		if (requireLogin && user <= 0) {
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
 			response.sendRedirect("login.jsp");
 			return;
 		}
@@ -254,8 +259,8 @@ public class userControllerImp extends HttpServlet {
 	public void listProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean requireLogin = false;
-		int user = getUser(request);
-		if (requireLogin && user <= 0) {
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
 			response.sendRedirect("login.jsp");
 			return;
 		}
@@ -299,8 +304,8 @@ public class userControllerImp extends HttpServlet {
 	public void listShoes(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean requireLogin = false;
-		int user = getUser(request);
-		if (requireLogin && user <= 0) {
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
 			response.sendRedirect("login.jsp");
 			return;
 		}
@@ -317,53 +322,144 @@ public class userControllerImp extends HttpServlet {
 	public void addBookItem(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean requireLogin = true;
-		int user = getUser(request);
-		if (requireLogin && user <= 0) {
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
 			response.sendRedirect("login.jsp");
 			return;
 		}
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		int numbers = Integer.parseInt(request.getParameter("numbers"));
-//		System.out.print(id);
-//		System.out.print(numbers);
-//		int cartID = cartDAO.findCart(user).getID();
-//		if (bookItemDAO.checkItem(cartID, id)) {
-//			numbers = numbers + bookitemdao.getNum(cartID, id);
-//			Bookitem bookItem = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
-//			bookitemdao.updateBookItem(bookItem, numbers);
-//		} else {
-//			Bookitem bookItem = new Bookitem(1, bookdao.findByID(id), cartdao.findCart(this.cusID), numbers, 0);
-//			bookitemdao.insertBookItem(bookItem);
-//		}
+		String bookItemId = request.getParameter("bookItemId");
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		BookItem bookItem = bookItemDAO.getBookItemByID(Integer.parseInt(bookItemId));
+		Cart cart = cartDAO.findCart(customerID);
+		cartDAO.addBookitem(cart, bookItem, quantity);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
+		dispatcher.forward(request, response);
+	}
+
+	public void addShoesItem(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		String shoesItemId = request.getParameter("shoesItemId");
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(Integer.parseInt(shoesItemId));
+		Cart cart = cartDAO.findCart(customerID);
+		cartDAO.addShoesItem(cart, shoesItem, quantity);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
+		dispatcher.forward(request, response);
+	}
+
+	public void addClothesItem(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		String clothesItemId = request.getParameter("clothesItemId");
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(Integer.parseInt(clothesItemId));
+		Cart cart = cartDAO.findCart(customerID);
+		cartDAO.addClothesItem(cart, clothesItem, quantity);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
+		dispatcher.forward(request, response);
+	}
+
+	public void addElectronicItem(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		String electronicItemId = request.getParameter("electronicItemId");
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(Integer.parseInt(electronicItemId));
+		Cart cart = cartDAO.findCart(customerID);
+		cartDAO.addElectronicItem(cart, electronicItem, quantity);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
 		dispatcher.forward(request, response);
 	}
 
 	public void showCart(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		int user = bookitemdao = new bookitemDAOImp();
-//		cartdao = new cartDAOImp();
-//		List<Bookitem> listBook = bookitemdao.findAllBookitem(this.cusID);
-//		float cartPrice = 0;
-//		for (Bookitem b1 : listBook) {
-//			cartPrice = cartPrice + b1.getTotalPrice();
-//		}
-//		cartdao.updateCart(cartdao.findCart(this.cusID), cartPrice);
-		// System.out.print(listBook);
-//		request.setAttribute("listBook", listBook);
-//		request.setAttribute("cartPrice", cartPrice);
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		float totalPrice = 0;
+		float discount = 0;
+		Cart cart = cartDAO.findCart(customerID);
+
+		List<HashMap<Integer, Integer>> books = cartDAO.getBookItemIDList(cart.getID());
+		List<HashMap<Integer, Integer>> clothes = cartDAO.getClothesItemIDList(cart.getID());
+		List<HashMap<Integer, Integer>> shoes = cartDAO.getShoesItem(cart.getID());
+		List<HashMap<Integer, Integer>> electronics = cartDAO.getElectronicItemIDList(cart.getID());
+
+		List<BookItem> bookItems = new ArrayList<BookItem>();
+		List<ClothesItem> clothesItems = new ArrayList<ClothesItem>();
+		List<ShoesItem> shoesItems = new ArrayList<ShoesItem>();
+		List<ElectronicItem> electronicItems = new ArrayList<ElectronicItem>();
+		
+		
+		for (HashMap<Integer,Integer> hashMap : books) {
+			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
+				BookItem bookItem = bookItemDAO.getBookItemByID(entry.getKey());
+				bookItems.add(bookItem);
+				totalPrice += bookItem.getPrice() * entry.getValue();
+				discount += bookItem.getDiscount() * entry.getValue();
+			}
+		}
+		for (HashMap<Integer,Integer> hashMap : clothes) {
+			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
+				ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(entry.getKey());
+				clothesItems.add(clothesItem);
+				totalPrice += clothesItem.getPrice() * entry.getValue();
+				discount += clothesItem.getDiscount() * entry.getValue();
+			}
+		}
+		for (HashMap<Integer,Integer> hashMap : shoes) {
+			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
+				ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(entry.getKey());
+				shoesItems.add(shoesItem);
+				totalPrice += shoesItem.getPrice() * entry.getValue();
+				discount += shoesItem.getDiscount() * entry.getValue();
+			}
+		}
+		for (HashMap<Integer,Integer> hashMap : electronics) {
+			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
+				ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(entry.getKey());
+				electronicItems.add(electronicItem);
+				totalPrice += electronicItem.getPrice() * entry.getValue();
+			}
+		}
+
+		request.setAttribute("bookItems", bookItems);
+		request.setAttribute("clothesItems", clothesItems);
+		request.setAttribute("shoesItems", shoesItems);
+		request.setAttribute("electronicItems", electronicItems);
+
+		request.setAttribute("totalPrice", totalPrice);
+		request.setAttribute("discount", discount);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	public void selectShipPayment(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		pmdao = new PaymentDAOImp();
-//		smdao = new ShipmentDAOImp();
-//		List<Payment> listPayment = pmdao.findAllPayment();
-//		List<Shipment> listShipment = smdao.findAllShipment();
-//		request.setAttribute("listPayment", listPayment);
-//		request.setAttribute("listShipment", listShipment);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("payShip.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -372,23 +468,6 @@ public class userControllerImp extends HttpServlet {
 			throws ServletException, IOException {
 		int paymentID = Integer.parseInt(request.getParameter("payment"));
 		int shipmentID = Integer.parseInt(request.getParameter("shipment"));
-//		customerdao = new customerDAOImp();
-//		cartdao = new cartDAOImp();
-//		bookitemdao = new bookitemDAOImp();
-//		Customer customer = customerdao.viewCustomer(this.cusID);
-//		Cart cart = cartdao.findCart(this.cusID);
-//		Shipment shipment = smdao.selectShipment(shipmentID);
-//		Payment payment = pmdao.selectPayment(paymentID);
-//		orderdao = new orderDAOImp();
-//		Order order = new Order(1, customer, cart, shipment, payment, 0, 0, "0");
-//		orderdao.insertOrder(order);
-//		int orderID = orderdao.getMaxID();
-//		Order myOrder = orderdao.getOrder(orderID);
-//		bookitemdao = new bookitemDAOImp();
-//		List<Bookitem> listBook = bookitemdao.findAllBookitem(this.cusID);
-//		request.setAttribute("myOrder", myOrder);
-//		request.setAttribute("listBook", listBook);
-//		bookitemdao.deleteBookitem(cartdao.findCart(this.cusID).getID());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("order.jsp");
 		dispatcher.forward(request, response);
 	}

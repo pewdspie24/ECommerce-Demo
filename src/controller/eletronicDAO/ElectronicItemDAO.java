@@ -20,5 +20,5 @@ public interface ElectronicItemDAO {
 	
 	public List <ElectronicItem> findAllComputerItem();
 	
-	public List <ElectronicItem> getElectronicItemByID(int ID);
+	public List <ElectronicItem> getElectronicsItemByID(int ID);
 }
