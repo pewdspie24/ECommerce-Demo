@@ -4,7 +4,7 @@ import model.order.Cart;
 
 import java.util.List;
 
-import javafx.util.Pair;
+import java.util.HashMap;
 import model.book.*;
 import model.clothes.*;
 import model.shoes.*;
@@ -43,12 +43,12 @@ public interface CartDAO {
 
 	public Cart findCart(int ID);
 	
-	public List <Pair<Integer, Integer>> getBookItemIDList(int cartID);
+	public List <HashMap<Integer, Integer>> getBookItemIDList(int cartID);
 	
-	public List <Pair<Integer, Integer>> getElectronicItemIDList(int cartID);
+	public List <HashMap<Integer, Integer>> getElectronicItemIDList(int cartID);
 	
-	public List <Pair<Integer, Integer>> getClothesItemIDList(int cartID);
+	public List <HashMap<Integer, Integer>> getClothesItemIDList(int cartID);
 	
-	public List <Pair<Integer, Integer>> getShoesItem(int cartID);
+	public List <HashMap<Integer, Integer>> getShoesItem(int cartID);
 
 }
