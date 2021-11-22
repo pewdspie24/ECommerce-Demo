@@ -15,7 +15,7 @@ import model.clothes.Short;
 
 public class ClothesDAOImp implements ClothesDAO {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     

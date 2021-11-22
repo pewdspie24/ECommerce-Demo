@@ -10,11 +10,11 @@ import model.customer.Fullname;
 
 public class FullnameDAOImp implements FullnameDAO{
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (id, firstName, lastName) VALUES " +" (?,?, ?);";
+    private static final String INSERT_FN_SQL = "INSERT INTO fullname" + "  (id, firstName, lastName) VALUES " +" (?,?,?);";
     private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where ID =?";
     private static final String UPDATE_FN_SQL = "UPDATE fullname set firstName = ?, lastName = ? where ID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM fullname;";

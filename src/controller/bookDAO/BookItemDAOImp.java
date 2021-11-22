@@ -14,7 +14,7 @@ import model.book.Publisher;
 
 public class BookItemDAOImp implements BookItemDAO {
 
-    private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
 
@@ -102,7 +102,7 @@ public class BookItemDAOImp implements BookItemDAO {
                 int iD = rs.getInt("ID");
                 String address = rs.getString("address");
                 String name = rs.getString("name");
-                String yearsOfPublish = rs.getString("yearofpublish");
+                String yearsOfPublish = rs.getString("YearsOfPublish");
                 pub = new Publisher(iD, address, name, yearsOfPublish);
             }
         } catch (SQLException e) {

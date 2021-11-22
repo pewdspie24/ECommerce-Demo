@@ -7,11 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.customer.Address;
-import model.customer.Customer;
 
 public class AddressDAOImp implements AddressDAO {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
