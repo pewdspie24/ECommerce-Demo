@@ -14,7 +14,7 @@ import model.customer.Phone;
 
 public class CustomerDAOImp implements CustomerDAO {
 
-    private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
 
@@ -24,7 +24,7 @@ public class CustomerDAOImp implements CustomerDAO {
     private static final String SELECT_CUS_BY_ID = "select * from customer where ID =?";
     private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where ID =?";
     private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where ID =?";
-    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where ID =?";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, StatesNo, number from phone where ID =?";
     private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where ID =?";
     private static final String SELECT_CUS_BY_ACC_ID = "select * from customer where accountID =?";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM customer;";

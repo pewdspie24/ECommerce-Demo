@@ -55,7 +55,7 @@ import model.shoes.Sandal;
 import model.shoes.ShoesItem;
 import model.shoes.Sneaker;
 
-@WebServlet(urlPatterns = {"/", ""})
+@WebServlet(urlPatterns = { "/", "" })
 public class userControllerImp extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -127,7 +127,7 @@ public class userControllerImp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 String action = request.getServletPath();
+		String action = request.getServletPath();
 		// System.out.println(action);
 		// String firstName = "Nguyen";
 		// String lastName = "Nam";
@@ -144,12 +144,16 @@ public class userControllerImp extends HttpServlet {
 		// String accountNum = "19199191";
 
 		// String now = timeFormat.format(new Date());
-		// Account account = new Account(accountDAO.getMaxID() + 1, email, password, now);
+		// Account account = new Account(accountDAO.getMaxID() + 1, email, password,
+		// now);
 		// Phone phone = new Phone(phoneDAO.getMaxID() + 1, stateNo, phoneNumber);
-		// Fullname fullname = new Fullname(fullnameDAO.getMaxID() + 1, firstName, lastName);
-		// Address address = new Address(addressDAO.getMaxID() + 1, houseNo, street, district, city);
-		// Customer customer = new Customer(customerDAO.getMaxID() + 1, accountNum, gender, birth, account, fullname,
-		// 		phone, address);
+		// Fullname fullname = new Fullname(fullnameDAO.getMaxID() + 1, firstName,
+		// lastName);
+		// Address address = new Address(addressDAO.getMaxID() + 1, houseNo, street,
+		// district, city);
+		// Customer customer = new Customer(customerDAO.getMaxID() + 1, accountNum,
+		// gender, birth, account, fullname,
+		// phone, address);
 
 		// accountDAO.createAccount(account);
 		// phoneDAO.createPhone(phone);
@@ -184,8 +188,8 @@ public class userControllerImp extends HttpServlet {
 				addClothesItem(request, response);
 				break;
 			// case "/addcart":
-			// 	addCart(request, response);
-			// 	break;
+			// addCart(request, response);
+			// break;
 			case "/showcart":
 				showCart(request, response);
 				break;
@@ -201,6 +205,9 @@ public class userControllerImp extends HttpServlet {
 				break;
 			case "/login":
 				login(request, response);
+				break;
+			case "/checkoutdetail":
+				checkoutDetail(request, response);
 				break;
 			default:
 				listProduct(request, response);
@@ -256,6 +263,104 @@ public class userControllerImp extends HttpServlet {
 		customerDAO.insertCustomer(customer);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("registersuccess.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	public void checkoutDetail(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("account.html");
+			return;
+		}
+		float totalPrice = 0;
+		float discount = 0;
+		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
+
+		HashMap<Integer, Integer> books = cartDAO.getBookItemIDList(cart.getID());
+		HashMap<Integer, Integer> clothes = cartDAO.getClothesItemIDList(cart.getID());
+		HashMap<Integer, Integer> shoes = cartDAO.getShoesItem(cart.getID());
+		HashMap<Integer, Integer> electronics = cartDAO.getElectronicItemIDList(cart.getID());
+
+		List<BookItem> bookItems = new ArrayList<BookItem>();
+		List<ClothesItem> clothesItems = new ArrayList<ClothesItem>();
+		List<ShoesItem> shoesItems = new ArrayList<ShoesItem>();
+		List<ElectronicItem> electronicItems = new ArrayList<ElectronicItem>();
+		List<Integer> bookQuantity = new ArrayList<Integer>();
+		List<Integer> clothesQuantity = new ArrayList<Integer>();
+		List<Integer> shoesQuantity = new ArrayList<Integer>();
+		List<Integer> electronicQuantity = new ArrayList<Integer>();
+		List<Float> bookPrice = new ArrayList<Float>();
+		List<Float> clothesPrice = new ArrayList<Float>();
+		List<Float> shoesPrice = new ArrayList<Float>();
+		List<Float> electronicPrice = new ArrayList<Float>();
+
+		for (Map.Entry<Integer, Integer> entry : books.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			BookItem bookItem = bookItemDAO.getBookItemByID(entry.getKey());
+			bookItems.add(bookItem);
+			bookQuantity.add(entry.getValue());
+			totalPrice += bookItem.getPrice() * entry.getValue();
+			bookPrice.add(bookItem.getPrice() * entry.getValue());
+			discount += bookItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : clothes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(entry.getKey());
+			clothesItems.add(clothesItem);
+			clothesPrice.add(clothesItem.getPrice() * entry.getValue());
+			clothesQuantity.add(entry.getValue());
+			totalPrice += clothesItem.getPrice() * entry.getValue();
+			discount += clothesItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : shoes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(entry.getKey());
+			shoesItems.add(shoesItem);
+			shoesPrice.add(shoesItem.getPrice() * entry.getValue());
+			shoesQuantity.add(entry.getValue());
+			totalPrice += shoesItem.getPrice() * entry.getValue();
+			discount += shoesItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : electronics.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(entry.getKey());
+			electronicItems.add(electronicItem);
+			electronicPrice.add(electronicItem.getPrice() * entry.getValue());
+			electronicQuantity.add(entry.getValue());
+			totalPrice += electronicItem.getPrice() * entry.getValue();
+			discount += electronicItem.getDiscount() * entry.getValue();
+		}
+
+		request.setAttribute("bookItems", bookItems);
+		request.setAttribute("clothesItems", clothesItems);
+		request.setAttribute("shoesItems", shoesItems);
+		request.setAttribute("electronicItems", electronicItems);
+
+		request.setAttribute("bookQuantity", bookQuantity);
+		request.setAttribute("clothesQuantity", clothesQuantity);
+		request.setAttribute("shoesQuantity", shoesQuantity);
+		request.setAttribute("electronicQuantity", electronicQuantity);
+
+		request.setAttribute("bookPrice", bookPrice);
+		request.setAttribute("clothesPrice", clothesPrice);
+		request.setAttribute("shoesPrice", shoesPrice);
+		request.setAttribute("electronicPrice", electronicPrice);
+
+		request.setAttribute("totalPrice", totalPrice);
+		request.setAttribute("discount", discount);
+		request.setAttribute("total", totalPrice - discount);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("checkoutDetail.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -359,10 +464,15 @@ public class userControllerImp extends HttpServlet {
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		BookItem bookItem = bookItemDAO.getBookItemByID(Integer.parseInt(bookItemId));
 		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
 		cartDAO.addBookitem(cart, bookItem, quantity);
 
 		PrintWriter writer = response.getWriter();
-		writer.write("Đã thêm sách " + bookItem.getID() + " vào giỏ hàng");
+		writer.write("Added bookID " + bookItem.getID() + " to cart");
 		writer.close();
 	}
 
@@ -378,6 +488,11 @@ public class userControllerImp extends HttpServlet {
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(Integer.parseInt(shoesItemId));
 		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
 		cartDAO.addShoesItem(cart, shoesItem, quantity);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
@@ -396,6 +511,11 @@ public class userControllerImp extends HttpServlet {
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(Integer.parseInt(clothesItemId));
 		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
 		cartDAO.addClothesItem(cart, clothesItem, quantity);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
@@ -414,6 +534,11 @@ public class userControllerImp extends HttpServlet {
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(Integer.parseInt(electronicItemId));
 		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
 		cartDAO.addElectronicItem(cart, electronicItem, quantity);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
@@ -431,48 +556,69 @@ public class userControllerImp extends HttpServlet {
 		float totalPrice = 0;
 		float discount = 0;
 		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
 
-		List<HashMap<Integer, Integer>> books = cartDAO.getBookItemIDList(cart.getID());
-		List<HashMap<Integer, Integer>> clothes = cartDAO.getClothesItemIDList(cart.getID());
-		List<HashMap<Integer, Integer>> shoes = cartDAO.getShoesItem(cart.getID());
-		List<HashMap<Integer, Integer>> electronics = cartDAO.getElectronicItemIDList(cart.getID());
+		HashMap<Integer, Integer> books = cartDAO.getBookItemIDList(cart.getID());
+		HashMap<Integer, Integer> clothes = cartDAO.getClothesItemIDList(cart.getID());
+		HashMap<Integer, Integer> shoes = cartDAO.getShoesItem(cart.getID());
+		HashMap<Integer, Integer> electronics = cartDAO.getElectronicItemIDList(cart.getID());
 
 		List<BookItem> bookItems = new ArrayList<BookItem>();
 		List<ClothesItem> clothesItems = new ArrayList<ClothesItem>();
 		List<ShoesItem> shoesItems = new ArrayList<ShoesItem>();
 		List<ElectronicItem> electronicItems = new ArrayList<ElectronicItem>();
-		
-		
-		for (HashMap<Integer,Integer> hashMap : books) {
-			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
-				BookItem bookItem = bookItemDAO.getBookItemByID(entry.getKey());
-				bookItems.add(bookItem);
-				totalPrice += bookItem.getPrice() * entry.getValue();
-				discount += bookItem.getDiscount() * entry.getValue();
-			}
+		List<Integer> bookQuantity = new ArrayList<Integer>();
+		List<Integer> clothesQuantity = new ArrayList<Integer>();
+		List<Integer> shoesQuantity = new ArrayList<Integer>();
+		List<Integer> electronicQuantity = new ArrayList<Integer>();
+		List<Float> bookPrice = new ArrayList<Float>();
+		List<Float> clothesPrice = new ArrayList<Float>();
+		List<Float> shoesPrice = new ArrayList<Float>();
+		List<Float> electronicPrice = new ArrayList<Float>();
+
+
+		for (Map.Entry<Integer, Integer> entry : books.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			BookItem bookItem = bookItemDAO.getBookItemByID(entry.getKey());
+			bookItems.add(bookItem);
+			bookQuantity.add(entry.getValue());
+			totalPrice += bookItem.getPrice() * entry.getValue();
+			bookPrice.add(bookItem.getPrice() * entry.getValue());
+			discount += bookItem.getDiscount() * entry.getValue();
 		}
-		for (HashMap<Integer,Integer> hashMap : clothes) {
-			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
-				ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(entry.getKey());
-				clothesItems.add(clothesItem);
-				totalPrice += clothesItem.getPrice() * entry.getValue();
-				discount += clothesItem.getDiscount() * entry.getValue();
-			}
+
+		for (Map.Entry<Integer, Integer> entry : clothes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(entry.getKey());
+			clothesItems.add(clothesItem);
+			clothesPrice.add(clothesItem.getPrice() * entry.getValue());
+			clothesQuantity.add(entry.getValue());
+			totalPrice += clothesItem.getPrice() * entry.getValue();
+			discount += clothesItem.getDiscount() * entry.getValue();
 		}
-		for (HashMap<Integer,Integer> hashMap : shoes) {
-			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
-				ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(entry.getKey());
-				shoesItems.add(shoesItem);
-				totalPrice += shoesItem.getPrice() * entry.getValue();
-				discount += shoesItem.getDiscount() * entry.getValue();
-			}
+
+		for (Map.Entry<Integer, Integer> entry : shoes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(entry.getKey());
+			shoesItems.add(shoesItem);
+			shoesPrice.add(shoesItem.getPrice() * entry.getValue());
+			shoesQuantity.add(entry.getValue());
+			totalPrice += shoesItem.getPrice() * entry.getValue();
+			discount += shoesItem.getDiscount() * entry.getValue();
 		}
-		for (HashMap<Integer,Integer> hashMap : electronics) {
-			for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {
-				ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(entry.getKey());
-				electronicItems.add(electronicItem);
-				totalPrice += electronicItem.getPrice() * entry.getValue();
-			}
+
+		for (Map.Entry<Integer, Integer> entry : electronics.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(entry.getKey());
+			electronicItems.add(electronicItem);
+			electronicPrice.add(electronicItem.getPrice() * entry.getValue());
+			electronicQuantity.add(entry.getValue());
+			totalPrice += electronicItem.getPrice() * entry.getValue();
+			discount += electronicItem.getDiscount() * entry.getValue();
 		}
 
 		request.setAttribute("bookItems", bookItems);
@@ -480,8 +626,19 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("shoesItems", shoesItems);
 		request.setAttribute("electronicItems", electronicItems);
 
+		request.setAttribute("bookQuantity", bookQuantity);
+		request.setAttribute("clothesQuantity", clothesQuantity);
+		request.setAttribute("shoesQuantity", shoesQuantity);
+		request.setAttribute("electronicQuantity", electronicQuantity);
+
+		request.setAttribute("bookPrice", bookPrice);
+		request.setAttribute("clothesPrice", clothesPrice);
+		request.setAttribute("shoesPrice", shoesPrice);
+		request.setAttribute("electronicPrice", electronicPrice);
+
 		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("discount", discount);
+		request.setAttribute("total", totalPrice - discount);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
 		dispatcher.forward(request, response);

@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="${bookQuantity[i.index]}"></td>
+                    <td>${bookQuantity[i.index]}</td>
                     <td>${bookPrice[i.index]}d</td>
                 </tr>
             </c:forEach>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="${clothesQuantity[i.index]}"></td>
+                    <td>${clothesQuantity[i.index]}</td>
                     <td>${clothesPrice[i.index]}d</td>
                 </tr>
             </c:forEach>
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="${shoesQuantity[i.index]}"></td>
+                    <td>${shoesQuantity[i.index]}"</td>
                     <td>${shoesPrice[i.index]}d</td>
                 </tr>
             </c:forEach>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="number" value="${electronicQuantity[i.index]}"></td>
+                    <td>${electronicQuantity[i.index]}</td>
                     <td>${electronicPrice[i.index]}d</td>
                 </tr>
             </c:forEach>
@@ -128,8 +128,26 @@
                 </tr>
             </table>
         </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <h2>Select payment</h2>
+                <select>
+                    <option selected>Cash on delivery</option>
+                    <option>Paypal</option>
+                    <option>Credit Card</option>
+                </select>
+            </div>
+            <div class="col-6 text-center">
+                <h2>Select shipment</h2>
+                <select>
+                    <option selected>AbroadShipment</option>
+                    <option>EconomicalShipment</option>
+                    <option>FastShipment</option>
+                </select>
+            </div>
+        </div>
         <div class="text-center">
-            <a href="checkoutDetail" class="btn btn-success">Checkout</a>
+            <a href="/checkout" class="btn btn-success">Order</a>
         </div>
     </div>
     <div id="footer" style="width: 100%; height: 550px; background-color: #e8e8e8; margin-top: 30px;">

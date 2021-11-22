@@ -19,7 +19,7 @@
             </div>
             <nav>
                 <ul id="MenuItems">
-                    <li><a href="">Home</a></li>
+                    <li><a href="home">Home</a></li>
                     <li><a href="products.html">Products</a></li>
                     <li><a href="">About</a></li>
                     <li><a href="">Contact</a></li>
@@ -66,7 +66,7 @@
                         String birth = request.getParameter("birth");
                         String accountNum = request.getParameter("accountNum"); -->
 
-                        <form id="RegForm" action="register" method="POST">
+                        <form id="RegForm" action="register" method="POST" style="height: calc(100% - 180px); overflow-y: auto;">
                             <input name="email" type="text" placeholder="Username">
                             <input name="password" type="password" placeholder="Password">
                             <input name="firstName" type="text" placeholder="First Name">
@@ -162,6 +162,7 @@
             Indicator.style.transform = "translate(0px)";
 
         }
+        login();
     </script>
 
 </body>
