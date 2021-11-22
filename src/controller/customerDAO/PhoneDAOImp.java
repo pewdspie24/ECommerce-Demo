@@ -6,17 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.customer.Customer;
 import model.customer.Phone;
 
 public class PhoneDAOImp implements PhoneDAO{
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_PHO_SQL = "INSERT INTO PHONE" + "  (statesNo, number) VALUES " +" (?, ?);";
-    private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where ID =?";
+    private static final String INSERT_PHO_SQL = "INSERT INTO PHONE" + "  (id, statesNo, number) VALUES " +" (?, ?, ?);";
+    private static final String SELECT_PHO_BY_ID = "SELECT id, statesNo, number from phone where ID =?";
     private static final String UPDATE_PHO_SQL = "UPDATE phone set statesno = ?, number = ? where ID  = ?;";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM phone;";
 
@@ -35,13 +34,13 @@ public class PhoneDAOImp implements PhoneDAO{
         return connection;
     }
     
-	public void createPhone(Customer cus) {
+	public void createPhone(Phone phone) {
 		System.out.println(INSERT_PHO_SQL);
         // try-with-resource statement will auto close the connection.
-        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADD_SQL)) {
-        	preparedStatement.setInt(1, cus.getID());
-            preparedStatement.setString(2, cus.getPhone().getStatesNo());
-            preparedStatement.setString(3, cus.getPhone().getNumber());
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PHO_SQL)) {
+            preparedStatement.setInt(1, phone.getID());
+            preparedStatement.setString(2, phone.getStatesNo());
+            preparedStatement.setString(3, phone.getNumber());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -49,11 +48,11 @@ public class PhoneDAOImp implements PhoneDAO{
         }
 	}
 
-	public void updatePhone(Customer cus, Phone pho) {
+	public void updatePhone(Phone phone) {
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PHO_SQL);) {
-        	preparedStatement.setString(1, pho.getStatesNo());
-        	preparedStatement.setString(2, pho.getNumber());
-        	preparedStatement.setInt(3, cus.getID());
+        	preparedStatement.setString(1, phone.getStatesNo());
+        	preparedStatement.setString(2, phone.getNumber());
+        	preparedStatement.setInt(3, phone.getID());
         	System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -7,11 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.book.Author;
-import model.book.Publisher;
 
 public class AuthorDAOImp {
 	
-	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/onlinestore?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
@@ -23,10 +22,8 @@ public class AuthorDAOImp {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return connection;
@@ -45,10 +42,10 @@ public class AuthorDAOImp {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
-            	int iD = rs.getInt("ID");
+            	int id = rs.getInt("ID");
                 String name = rs.getString("name");
                 String biography = rs.getString("biography");
-                aut = new Author(ID, name, biography);
+                aut = new Author(id, name, biography);
             }
         } catch (SQLException e) {
             e.printStackTrace();

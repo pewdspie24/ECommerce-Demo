@@ -1,0 +1,5 @@
+{
+  "java.project.referencedLibraries": [
+    "WebContent/WEB-INF/lib/*.jar"
+  ]
+}

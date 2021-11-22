@@ -2,7 +2,6 @@ package controller.bookDAO;
 
 import java.util.List;
 
-import model.book.Book;
 import model.book.Comics;
 import model.book.LightNovel;
 import model.book.Magazine;
@@ -17,7 +16,7 @@ public interface BookDAO {
 
 	public List <Comics> findAllComics();
 	
-	public List <LightNovel> findAllLN();
+	public List <LightNovel> findAllLightNovel();
 	
 	public List <Magazine> findAllMagazine();
 	
@@ -25,7 +24,7 @@ public interface BookDAO {
 
 	public Comics findComicByID(int ID);
 	
-	public LightNovel findLNByID(int ID);
+	public LightNovel findLightNovelByID(int ID);
 	
 	public Magazine findMagazineByID(int ID);
 

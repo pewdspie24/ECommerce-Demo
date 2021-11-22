@@ -18,7 +18,7 @@ public interface CustomerDAO {
 
 	Customer viewCustomer(int ID);
 	
-	public int getCusID(int accountID);
+	public int getCustomerID(int accountID);
 	
 	public int getMaxID();
 }
