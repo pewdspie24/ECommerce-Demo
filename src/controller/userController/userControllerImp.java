@@ -1,6 +1,7 @@
 package controller.userController;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,7 @@ import model.shoes.Sandal;
 import model.shoes.ShoesItem;
 import model.shoes.Sneaker;
 
-@WebServlet("/")
+@WebServlet(urlPatterns = {"/", ""})
 public class userControllerImp extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -126,11 +127,38 @@ public class userControllerImp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String action = request.getServletPath();
-		System.out.println(action);
+		 String action = request.getServletPath();
+		// System.out.println(action);
+		// String firstName = "Nguyen";
+		// String lastName = "Nam";
+		// String email = "1";
+		// String password = "1";
+		// String phoneNumber = "000111";
+		// String stateNo = "024";
+		// String houseNo = "106";
+		// String street = "ngõ 136 NH - ĐX";
+		// String district = "Gia Lâm";
+		// String city = "Hà Nội";
+		// String gender = "Nam";
+		// String birth = "00/01/2021";
+		// String accountNum = "19199191";
+
+		// String now = timeFormat.format(new Date());
+		// Account account = new Account(accountDAO.getMaxID() + 1, email, password, now);
+		// Phone phone = new Phone(phoneDAO.getMaxID() + 1, stateNo, phoneNumber);
+		// Fullname fullname = new Fullname(fullnameDAO.getMaxID() + 1, firstName, lastName);
+		// Address address = new Address(addressDAO.getMaxID() + 1, houseNo, street, district, city);
+		// Customer customer = new Customer(customerDAO.getMaxID() + 1, accountNum, gender, birth, account, fullname,
+		// 		phone, address);
+
+		// accountDAO.createAccount(account);
+		// phoneDAO.createPhone(phone);
+		// fullnameDAO.createFullName(fullname);
+		// addressDAO.insertAddress(address);
+		// customerDAO.insertCustomer(customer);
 
 		try {
-			switch (action) {
+			switch (action.toLowerCase()) {
 			case "/register":
 				register(request, response);
 				break;
@@ -243,7 +271,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = false;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		List<Comics> comics = bookDAO.findAllComics();
@@ -261,7 +289,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = false;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 
@@ -297,7 +325,7 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("listLaptop", laptop);
 		request.setAttribute("listComputer", computer);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -306,7 +334,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = false;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		List<ShoesItem> boots = shoesItemDAO.findAllBootItem();
@@ -324,7 +352,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = true;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		String bookItemId = request.getParameter("bookItemId");
@@ -333,8 +361,9 @@ public class userControllerImp extends HttpServlet {
 		Cart cart = cartDAO.findCart(customerID);
 		cartDAO.addBookitem(cart, bookItem, quantity);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/show");
-		dispatcher.forward(request, response);
+		PrintWriter writer = response.getWriter();
+		writer.write("Đã thêm sách " + bookItem.getID() + " vào giỏ hàng");
+		writer.close();
 	}
 
 	public void addShoesItem(HttpServletRequest request, HttpServletResponse response)
@@ -342,7 +371,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = true;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		String shoesItemId = request.getParameter("shoesItemId");
@@ -360,7 +389,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = true;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		String clothesItemId = request.getParameter("clothesItemId");
@@ -378,7 +407,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = true;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		String electronicItemId = request.getParameter("electronicItemId");
@@ -396,7 +425,7 @@ public class userControllerImp extends HttpServlet {
 		boolean requireLogin = true;
 		int customerID = getcustomerID(request);
 		if (requireLogin && customerID <= 0) {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("account.html");
 			return;
 		}
 		float totalPrice = 0;

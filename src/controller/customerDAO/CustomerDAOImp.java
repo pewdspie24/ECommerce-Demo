@@ -20,12 +20,12 @@ public class CustomerDAOImp implements CustomerDAO {
 
     private static final String INSERT_CUS_SQL = "INSERT INTO customer"
             + "  (gender, birth, accountnum, ID3, CardID, Date2, ID2, Date, accountID, addressID, phoneID, fullnameID, id) VALUES "
-            + " (?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?, ?, ?, ?);";
+            + " (?, ?, ?, NULL, NULL, NULL, NULL, NULL, ?, ?, ?, ?, ?);";
     private static final String SELECT_CUS_BY_ID = "select * from customer where ID =?";
     private static final String SELECT_ADD_BY_ID = "select id, number, city, district, street from address where ID =?";
     private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where ID =?";
     private static final String SELECT_PHO_BY_ID = "SELECT id, number, city, district, street from phone where ID =?";
-    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where IID =?";
+    private static final String SELECT_FN_BY_ID = "SELECT id, firstName, lastName from fullname where ID =?";
     private static final String SELECT_CUS_BY_ACC_ID = "select * from customer where accountID =?";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM customer;";
 
@@ -49,6 +49,8 @@ public class CustomerDAOImp implements CustomerDAO {
         // try-with-resource statement will auto close the connection.
         try (Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CUS_SQL)) {
+                    // gender, birth, accountnum, ID3, CardID, Date2, ID2, Date, accountID,
+                    // addressID, phoneID, fullnameID, id
             preparedStatement.setString(1, customer.getGender());
             preparedStatement.setString(2, customer.getBirth());
             preparedStatement.setString(3, customer.getAccountNum());

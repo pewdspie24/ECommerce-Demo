@@ -14,7 +14,7 @@ public class AccountDAOImp implements AccountDAO {
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     
-    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (id, email, password, createat) VALUES " +" (?,?, ?, ?);";
+    private static final String INSERT_ACC_SQL = "INSERT INTO account" + "  (id, email, password, createdat) VALUES " +" (?,?, ?, ?);";
     private static final String SELECT_ACC_BY_ID = "select id,email,password,createdat from account where ID =?";
     private static final String VALIDATE_ACC_BY_USR_PWD = "select * from account where email = ? and password = ? ";
     private static final String SELECT_MAX_ID = "SELECT MAX(id) FROM account;";

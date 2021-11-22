@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.customer.Address;
-import model.customer.Customer;
 
 public class AddressDAOImp implements AddressDAO {
 	
