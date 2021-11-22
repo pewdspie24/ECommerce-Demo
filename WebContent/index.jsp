@@ -18,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -31,7 +32,7 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="">Home</a></li>
                         <li><a href="products.html">Products</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
@@ -73,7 +74,7 @@
                     <h4 class="text-center">Clothes</h4>
                 </div>
                 <div class="col-4">
-                    <img style="width: 100%; aspect-ratio: 1/1;" src="images/book.jpg">
+                    <img style="width: 100%; aspect-ratio: 1/1;" src="images/electronic.jpg">
                     <h4 class="text-center">Electronic</h4>
                 </div>
             </div>
@@ -81,7 +82,6 @@
     </div>
 
     <!-- Featured Products -->
-
     <div class="small-container">
         <h2 class="title">Comics</h2>
         <div class="row">
@@ -99,106 +99,25 @@
                 </div>
             </c:forEach>
         </div>
-        <h2 class="title">Latest Products</h2>
+    </div>
+    
+    <!-- Featured Products -->
+    <div class="small-container">
+        <h2 class="title">Magazine</h2>
         <div class="row">
-            <div class="col-4">
-                <img src="images/product-5.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+            <c:forEach items="${listMagazine}" var="product">
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="/image/book.jpg" alt="img product">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.title}</h5>
+                            <p class="card-text">${product.summary}</p>
+                            <p class="card-text">${product.price}</p>
+                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
                 </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-6.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-7.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-8.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/product-9.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-10.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-11.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
-            <div class="col-4">
-                <img src="images/product-12.jpg">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
-            </div>
+            </c:forEach>
         </div>
     </div>
 
@@ -220,98 +139,31 @@
         </div>
     </div> -->
 
-    <!-- Testimonial -->
-    <div class="testimonial">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-3">
-                    <i class="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industry's standard dummy text.</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-1.png">
-                    <h3>Sean Parker</h3>
-                </div>
-                <div class="col-3">
-                    <i class="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industry's standard dummy text.</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-2.png">
-                    <h3>Mike Smith</h3>
-                </div>
-                <div class="col-3">
-                    <i class="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industry's standard dummy text.</p>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-3.png">
-                    <h3>Mabel Joe</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!-- Footer -->
-    <div class="footer">
-        <div class="container">
+    <div id="footer" style="width: 100%; height: 550px; background-color: #e8e8e8; margin-top: 30px;">
+            <h3 style="font-size: 40px; text-align: center; padding: 50px 0;">About</h3>
             <div class="row">
-                <div class="footer-col-1">
-                    <h3>Download Our App</h3>
-                    <p>Download App for Android and ios mobile phone.</p>
-                    <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/app-store.png">
-                    </div>
-                </div>
-                <div class="footer-col-2">
-                    <img src="images/logo-white.png">
-                    <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
-                    </p>
-                </div>
-                <div class="footer-col-3">
-                    <h3>Useful Links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Join Affiliate</li>
+                <div class="col-6">
+                    <ul class="list-group-flush">
+                        <li class="list-group-item"><h4>Liên hệ</h4></li>
+                        <li class="list-group-item"><i class="fas fa-map-marker"></i>  Địa chỉ: PTIT, Hà Nội</li>
+                        <li class="list-group-item"><i class="fas fa-envelope"></i>  Email: abcabcbabc@gmail.com</li>
+                        <li class="list-group-item"><i class="fas fa-mobile-alt"></i>  SĐT: 0123456879</li>
+                        <li class="list-group-item"><i class="fas fa-phone"></i>  Đường dây nóng: 19000099</li>
                     </ul>
                 </div>
-                <div class="footer-col-4">
-                    <h3>Follow Us</h3>
-                    <ul>
-                        <li>Facebook</li>
-                        <li>Twitter</li>
-                        <li>Instagram</li>
-                        <li>Youtube</li>
+
+                <div class="col-6">
+                    <ul class="list-group-flush">
+                        <li class="list-group-item"><h4>Theo dõi chúng tôi trên</h4></li>
+                        <li class="list-group-item"><i class="fab fa-facebook-square"></i>  Facebook</li>
+                        <li class="list-group-item"><i class="fab fa-instagram"></i>  Instagram</li>
+                        <li class="list-group-item"><i class="fab fa-twitter-square"></i>  Twiter</li>
                     </ul>
                 </div>
             </div>
-            <hr>
-            <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
         </div>
-    </div>
-
+        
     <!-- javascript -->
 
     <script>

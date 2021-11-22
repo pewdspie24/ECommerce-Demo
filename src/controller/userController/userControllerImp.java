@@ -123,12 +123,15 @@ public class userControllerImp extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getServletPath();
+		System.out.println(action);
 
 		try {
 			switch (action) {
 			case "/register":
 				register(request, response);
 				break;
+			case "/loginform":
+				loginform(request, response);
 			case "/logout":
 				logout(request, response);
 				break;
@@ -407,7 +410,7 @@ public class userControllerImp extends HttpServlet {
 	}
 
 	public void loginform(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("account.html");
 	}
 
 }
