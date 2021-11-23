@@ -30,9 +30,9 @@ public class PaymentDAOImp implements PaymentDAO {
     private static final String SELECT_ALL_CASHS = "select * from payment where id2 is not null;";
     private static final String SELECT_ALL_CHECKS = "select * from payment where id3 is not null;";
     private static final String SELECT_ALL_CREDITS = "select * from payment where id4 is not null;";
-    private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?";
-    private static final String SELECT_VOUCHER_BY_ID = "select * from Voucher where id =?";
-    private static final String SELECT_PAYMENT_BY_ID = "select * from payment where id =?";
+    private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?;";
+    private static final String SELECT_VOUCHER_BY_ID = "select * from Voucher where id =?;";
+    private static final String SELECT_PAYMENT_BY_ID = "select * from payment where id =?;";
 
 	public void getShipment() {
 		// TODO - implement PaymentDAOImp.getShipment

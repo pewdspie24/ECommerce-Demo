@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.order.Voucher;
 import model.order.VoucherConstant;
 import model.order.VoucherPercentage;
 
@@ -24,6 +25,7 @@ public class VoucherDAOImp implements VoucherDAO{
     private static final String CHECK_TYPES_VP = "select * from voucher where id =? and id3 is not null;";
     private static final String SELECT_ALL_VC = "select * from voucher where id2 is not null;";
     private static final String SELECT_ALL_VP = "select * from voucher where id3 is not null;";
+    private static final String SELECT_VOUCHER_BY_ID = "select * from voucher where id =?;";
     
     public VoucherDAOImp() {}
     
@@ -189,5 +191,28 @@ public class VoucherDAOImp implements VoucherDAO{
 	        return voucherconstants;
 	}
 
-	
+	public Voucher getVoucherByID(int ID) {
+		Voucher man = null;
+		System.out.println("ditmemay");
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VOUCHER_BY_ID);) {
+            preparedStatement.setInt(1, ID);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int iD = rs.getInt("ID");
+                String name = rs.getString("name");
+                String expiresDate = rs.getString("expiresDate");
+                man = new Voucher(iD, name, expiresDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return man;
+	}
 }

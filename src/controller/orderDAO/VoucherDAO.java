@@ -3,6 +3,7 @@ package controller.orderDAO;
 import java.util.List;
 
 import model.order.VoucherPercentage;
+import model.order.Voucher;
 import model.order.VoucherConstant;
 
 public interface VoucherDAO {
@@ -22,4 +23,6 @@ public interface VoucherDAO {
 	public VoucherConstant findVoucherConstantByID(int ID);
 	
 	public VoucherPercentage findVoucherPercentageByID(int ID);
-}
+	
+	public Voucher getVoucherByID(int ID);
+} 

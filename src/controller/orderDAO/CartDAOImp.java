@@ -39,6 +39,16 @@ public class CartDAOImp implements CartDAO {
     private static final String SELECT_CITEM_CART = "SELECT * FROM clothesitem_cart where cartID =?;";
     private static final String SELECT_EITEM_CART = "SELECT * FROM electronicitem_cart where cartID =?;";
     private static final String SELECT_SITEM_CART = "SELECT * FROM shoesitem_cart where cartID =?;";
+    
+    private static final String UPDATE_BITEM_CART = "UPDATE bookitem_cart SET quantity = quantity+1 WHERE cartID = ? AND bookitemID = ?;";
+    private static final String UPDATE_CITEM_CART = "UPDATE clothesitem_cart SET quantity = quantity+1 WHERE cartID = ? AND ClothesitemID = ?;";
+    private static final String UPDATE_EITEM_CART = "UPDATE electronicitem_cart SET quantity = quantity+1 WHERE cartID = ? AND ElectronicitemID = ?;";
+    private static final String UPDATE_SITEM_CART = "UPDATE shoesitem_cart SET quantity = quantity+1 WHERE cartID = ? AND ShoesitemID = ?;";
+    
+    private static final String CHECK_SITEM_CART = "SELECT quantity FROM shoesitem_cart where cartID = ? AND ShoesitemID = ?;";
+    private static final String CHECK_BITEM_CART = "SELECT quantity FROM bookitem_cart where cartID = ? AND bookitemID = ?;";
+    private static final String CHECK_CITEM_CART = "SELECT quantity FROM clothesitem_cart where cartID = ? AND ClothesitemID = ?;";
+    private static final String CHECK_EITEM_CART = "SELECT quantity FROM electronicitem_cart where cartID = ? AND ElectronicitemID = ?;";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -122,7 +132,161 @@ public class CartDAOImp implements CartDAO {
             e.printStackTrace();
         }
     }
+    
+    public void updateBookitem(Cart cart, BookItem book) {
+        // TODO - implement CartDAOImp.addBookitem
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BITEM_CART)) {
+            preparedStatement.setInt(2, book.getID());
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateClothesitem(Cart cart, ClothesItem book) {
+        // TODO - implement CartDAOImp.addBookitem
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CITEM_CART)) {
+            preparedStatement.setInt(2, book.getID());
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateElectronicitem(Cart cart, ElectronicItem book) {
+        // TODO - implement CartDAOImp.addBookitem
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EITEM_CART)) {
+            preparedStatement.setInt(2, book.getID());
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    public void updateShoesitem(Cart cart, ShoesItem book) {
+        // TODO - implement CartDAOImp.addBookitem
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SITEM_CART)) {
+            preparedStatement.setInt(2, book.getID());
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public int checkBookitem(Cart cart, BookItem book) {
+        // Step 1: Establishing a Connection
+    	int quantity = 0;
+        try (Connection connection = getConnection();
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(CHECK_BITEM_CART);) {
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.setInt(2, book.getID());
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
 
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                quantity = rs.getInt("quantity");
+                // String createdAt = rs.getString("createdAt");
+                // String updatedAt= rs.getString("updatedAt");
+                // Float totalPrice = rs.getFloat("totalPrice");
+                // int totalQuantity = rs.getInt("totalQuantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+    
+    public int checkElectronicitem(Cart cart, ElectronicItem elec) {
+        // Step 1: Establishing a Connection
+    	int quantity = 0;
+        try (Connection connection = getConnection();
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EITEM_CART);) {
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.setInt(2, elec.getID());
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                quantity = rs.getInt("quantity");
+                // String createdAt = rs.getString("createdAt");
+                // String updatedAt= rs.getString("updatedAt");
+                // Float totalPrice = rs.getFloat("totalPrice");
+                // int totalQuantity = rs.getInt("totalQuantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+    
+    public int checkClothesitem(Cart cart, ClothesItem clothes) {
+        // Step 1: Establishing a Connection
+    	int quantity = 0;
+        try (Connection connection = getConnection();
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(CHECK_CITEM_CART);) {
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.setInt(2, clothes.getID());
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                quantity = rs.getInt("quantity");
+                // String createdAt = rs.getString("createdAt");
+                // String updatedAt= rs.getString("updatedAt");
+                // Float totalPrice = rs.getFloat("totalPrice");
+                // int totalQuantity = rs.getInt("totalQuantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+    
+    public int checkShoesitem(Cart cart, ShoesItem shoes) {
+        // Step 1: Establishing a Connection
+    	int quantity = 0;
+        try (Connection connection = getConnection();
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(CHECK_SITEM_CART);) {
+            preparedStatement.setInt(1, cart.getID());
+            preparedStatement.setInt(2, shoes.getID());
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                quantity = rs.getInt("quantity");
+                // String createdAt = rs.getString("createdAt");
+                // String updatedAt= rs.getString("updatedAt");
+                // Float totalPrice = rs.getFloat("totalPrice");
+                // int totalQuantity = rs.getInt("totalQuantity");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+    
     public HashMap<Integer, Integer> getBookItemIDList(int cartID) {
         // TODO - implement CartDAOImp.addBookitem
         HashMap<Integer, Integer> bitem = new HashMap<Integer, Integer>();

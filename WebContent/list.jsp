@@ -38,7 +38,7 @@ style="position: absolute; top: 1rem; right: 1rem; z-index:100; background-color
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" alt="logo" width="125px"></a>
+                    <a href="home"><img src="images/logo.png" alt="logo" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="MenuItems">

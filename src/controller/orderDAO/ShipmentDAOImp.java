@@ -27,7 +27,7 @@ public class ShipmentDAOImp implements ShipmentDAO{
     private static final String SELECT_ALL_FASTS = "select * from shipment where id2 is not null;";
     private static final String SELECT_ALL_ECOS = "select * from shipment where id3 is not null;";
     private static final String SELECT_ALL_ABROADS = "select * from shipment where id4 is not null;";
-    private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?";
+    private static final String SELECT_SHIPMENT_BY_ID = "select * from Shipment where id =?;";
     
     public ShipmentDAOImp() {}
     

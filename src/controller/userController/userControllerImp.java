@@ -35,6 +35,8 @@ import controller.orderDAO.CartDAOImp;
 import controller.orderDAO.OrderDAOImp;
 import controller.orderDAO.PaymentDAOImp;
 import controller.orderDAO.ShipmentDAOImp;
+import controller.orderDAO.VoucherDAO;
+import controller.orderDAO.VoucherDAOImp;
 import controller.shoesDAO.ShoesDAOImp;
 import controller.shoesDAO.ShoesItemDAOImp;
 import model.book.Book;
@@ -49,7 +51,16 @@ import model.customer.Customer;
 import model.customer.Fullname;
 import model.customer.Phone;
 import model.electronic.ElectronicItem;
+import model.order.AbroadShipment;
 import model.order.Cart;
+import model.order.EconomicalShipment;
+import model.order.FastShipment;
+import model.order.Order;
+import model.order.Payment;
+import model.order.Shipment;
+import model.order.Voucher;
+import model.order.VoucherConstant;
+import model.order.VoucherPercentage;
 import model.shoes.Boot;
 import model.shoes.Sandal;
 import model.shoes.ShoesItem;
@@ -72,6 +83,7 @@ public class userControllerImp extends HttpServlet {
 	private CartDAOImp cartDAO;
 	private PaymentDAOImp paymentDAO;
 	private ShipmentDAOImp shipmentDAO;
+	private VoucherDAOImp voucherDAO;
 	private OrderDAOImp orderDAO;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
@@ -98,6 +110,7 @@ public class userControllerImp extends HttpServlet {
 		paymentDAO = new PaymentDAOImp();
 		shipmentDAO = new ShipmentDAOImp();
 		orderDAO = new OrderDAOImp();
+		voucherDAO = new VoucherDAOImp();
 	}
 
 	private Cookie getCookie(HttpServletRequest request, String name) {
@@ -200,14 +213,14 @@ public class userControllerImp extends HttpServlet {
 			case "/selectsp":
 				selectShipPayment(request, response);
 				break;
-			case "/order":
-				showOrder(request, response);
-				break;
 			case "/login":
 				login(request, response);
 				break;
 			case "/checkoutdetail":
 				checkoutDetail(request, response);
+				break;
+			case "/order":
+				order(request, response);
 				break;
 			default:
 				listProduct(request, response);
@@ -363,6 +376,140 @@ public class userControllerImp extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("checkoutDetail.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	public void order(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		boolean requireLogin = true;
+		int customerID = getcustomerID(request);
+		int shipmentID = Integer.parseInt(request.getParameter("shipment"));
+		int voucherID = Integer.parseInt(request.getParameter("voucher"));
+		int paymentID = Integer.parseInt(request.getParameter("payment"));
+//		System.out.println("DCMM"+voucherID);
+		if (requireLogin && customerID <= 0) {
+			response.sendRedirect("account.html");
+			return;
+		}
+		float totalPrice = 0;
+		float discount = 0;
+		Cart cart = cartDAO.findCart(customerID);
+		if (cart == null) {
+			cart = new Cart(0, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()),
+					dateFormat.format(new Date()), 0, 0);
+			cartDAO.createCart(cart);
+		}
+
+		HashMap<Integer, Integer> books = cartDAO.getBookItemIDList(cart.getID());
+		HashMap<Integer, Integer> clothes = cartDAO.getClothesItemIDList(cart.getID());
+		HashMap<Integer, Integer> shoes = cartDAO.getShoesItem(cart.getID());
+		HashMap<Integer, Integer> electronics = cartDAO.getElectronicItemIDList(cart.getID());
+		Shipment shipment = shipmentDAO.getShipmentByID(shipmentID);
+		System.out.println("DCMM"+voucherID);
+		Voucher voucher1 = voucherDAO.getVoucherByID(voucherID);
+		Payment payment = paymentDAO.getPaymentByID(paymentID);
+		
+//		if (shipmentID == 3){
+//			FastShipment shipment = shipmentDAO.findFastShipmentByID(shipmentID);
+//		}else if(shipmentID == 2){
+//			EconomicalShipment shipment = shipmentDAO.findEconomicalShipmentByID(shipmentID);
+//		}
+//		else{
+//			AbroadShipment shipment = shipmentDAO.findAbroadShipmentByID(shipmentID);
+//		}
+		
+		List<BookItem> bookItems = new ArrayList<BookItem>();
+		List<ClothesItem> clothesItems = new ArrayList<ClothesItem>();
+		List<ShoesItem> shoesItems = new ArrayList<ShoesItem>();
+		List<ElectronicItem> electronicItems = new ArrayList<ElectronicItem>();
+		List<Integer> bookQuantity = new ArrayList<Integer>();
+		List<Integer> clothesQuantity = new ArrayList<Integer>();
+		List<Integer> shoesQuantity = new ArrayList<Integer>();
+		List<Integer> electronicQuantity = new ArrayList<Integer>();
+		List<Float> bookPrice = new ArrayList<Float>();
+		List<Float> clothesPrice = new ArrayList<Float>();
+		List<Float> shoesPrice = new ArrayList<Float>();
+		List<Float> electronicPrice = new ArrayList<Float>();
+
+		for (Map.Entry<Integer, Integer> entry : books.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			BookItem bookItem = bookItemDAO.getBookItemByID(entry.getKey());
+			bookItems.add(bookItem);
+			bookQuantity.add(entry.getValue());
+			totalPrice += bookItem.getPrice() * entry.getValue();
+			bookPrice.add(bookItem.getPrice() * entry.getValue());
+			discount += bookItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : clothes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ClothesItem clothesItem = clothesItemDAO.getClothesItemByID(entry.getKey());
+			clothesItems.add(clothesItem);
+			clothesPrice.add(clothesItem.getPrice() * entry.getValue());
+			clothesQuantity.add(entry.getValue());
+			totalPrice += clothesItem.getPrice() * entry.getValue();
+			discount += clothesItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : shoes.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ShoesItem shoesItem = shoesItemDAO.getShoesItemByID(entry.getKey());
+			shoesItems.add(shoesItem);
+			shoesPrice.add(shoesItem.getPrice() * entry.getValue());
+			shoesQuantity.add(entry.getValue());
+			totalPrice += shoesItem.getPrice() * entry.getValue();
+			discount += shoesItem.getDiscount() * entry.getValue();
+		}
+
+		for (Map.Entry<Integer, Integer> entry : electronics.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+			ElectronicItem electronicItem = electronicItemDAO.getElectronicItemByID(entry.getKey());
+			electronicItems.add(electronicItem);
+			electronicPrice.add(electronicItem.getPrice() * entry.getValue());
+			electronicQuantity.add(entry.getValue());
+			totalPrice += electronicItem.getPrice() * entry.getValue();
+			discount += electronicItem.getDiscount() * entry.getValue();
+		}
+		
+		float voucherdiscount = 0;
+		float shipmentPrice = shipment.getPrice();
+		int type = voucherDAO.checkType(voucherID);
+		if(type == 2){
+			VoucherConstant vc = voucherDAO.findVoucherConstantByID(voucherID);
+			voucherdiscount = vc.getQuantity();
+		}else{
+			VoucherPercentage vc = voucherDAO.findVoucherPercentageByID(voucherID);
+			voucherdiscount = totalPrice*vc.getPercentage()/100;
+		}
+		
+		payment.setAmount(totalPrice - discount - voucherdiscount);
+		payment.setShipment(shipment);
+		payment.setVoucher(voucher1);
+		Order order = new Order(0, cart, payment, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()));
+		orderDAO.insertOrder(order);
+		
+		request.setAttribute("bookItems", bookItems);
+		request.setAttribute("clothesItems", clothesItems);
+		request.setAttribute("shoesItems", shoesItems);
+		request.setAttribute("electronicItems", electronicItems);
+
+		request.setAttribute("bookQuantity", bookQuantity);
+		request.setAttribute("clothesQuantity", clothesQuantity);
+		request.setAttribute("shoesQuantity", shoesQuantity);
+		request.setAttribute("electronicQuantity", electronicQuantity);
+
+		request.setAttribute("bookPrice", bookPrice);
+		request.setAttribute("clothesPrice", clothesPrice);
+		request.setAttribute("shoesPrice", shoesPrice);
+		request.setAttribute("electronicPrice", electronicPrice);
+
+		request.setAttribute("totalPrice", totalPrice);
+		request.setAttribute("voucherDiscount", voucherdiscount);
+		request.setAttribute("discount", discount+voucherdiscount);
+		request.setAttribute("shipmentPrice", shipmentPrice);
+		request.setAttribute("total", totalPrice - discount - voucherdiscount + shipmentPrice);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("order.jsp");
+		dispatcher.forward(request, response);
+	}
 
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cookie cookie = new Cookie("customerID", "");
@@ -469,8 +616,14 @@ public class userControllerImp extends HttpServlet {
 					dateFormat.format(new Date()), 0, 0);
 			cartDAO.createCart(cart);
 		}
-		cartDAO.addBookitem(cart, bookItem, quantity);
-
+		if (cartDAO.checkBookitem(cart, bookItem) > 0){
+			System.out.println("abc");
+			cartDAO.updateBookitem(cart, bookItem);
+		}
+		else{
+			cartDAO.addBookitem(cart, bookItem, quantity);
+		}
+		
 		PrintWriter writer = response.getWriter();
 		writer.write("Added bookID " + bookItem.getID() + " to cart");
 		writer.close();
@@ -493,7 +646,12 @@ public class userControllerImp extends HttpServlet {
 					dateFormat.format(new Date()), 0, 0);
 			cartDAO.createCart(cart);
 		}
-		cartDAO.addShoesItem(cart, shoesItem, quantity);
+		if (cartDAO.checkShoesitem(cart, shoesItem) > 0){
+			cartDAO.updateShoesitem(cart, shoesItem);
+		}
+		else{
+			cartDAO.addShoesItem(cart, shoesItem, quantity);
+		}
 		
 		PrintWriter writer = response.getWriter();
 		writer.write("Added shoesID " + shoesItem.getID() + " to cart");
@@ -517,7 +675,12 @@ public class userControllerImp extends HttpServlet {
 					dateFormat.format(new Date()), 0, 0);
 			cartDAO.createCart(cart);
 		}
-		cartDAO.addClothesItem(cart, clothesItem, quantity);
+		if (cartDAO.checkClothesitem(cart, clothesItem) > 0){
+			cartDAO.updateClothesitem(cart, clothesItem);
+		}
+		else{
+			cartDAO.addClothesItem(cart, clothesItem, quantity);
+		}
 
 		PrintWriter writer = response.getWriter();
 		writer.write("Added clothesID " + clothesItem.getID() + " to cart");
@@ -541,7 +704,12 @@ public class userControllerImp extends HttpServlet {
 					dateFormat.format(new Date()), 0, 0);
 			cartDAO.createCart(cart);
 		}
-		cartDAO.addElectronicItem(cart, electronicItem, quantity);
+		if (cartDAO.checkElectronicitem(cart, electronicItem) > 0){
+			cartDAO.updateElectronicitem(cart, electronicItem);
+		}
+		else{
+			cartDAO.addElectronicItem(cart, electronicItem, quantity);
+		}
 
 		PrintWriter writer = response.getWriter();
 		writer.write("Added electronicID " + electronicItem.getID() + " to cart");

@@ -128,27 +128,36 @@
                 </tr>
             </table>
         </div>
+        <form action="order">
         <div class="row">
-            <div class="col-6 text-center">
+            <div class="col-4 text-center">
                 <h2>Select payment</h2>
-                <select>
-                    <option selected>Cash on delivery</option>
-                    <option>Paypal</option>
-                    <option>Credit Card</option>
+                <select name="payment">
+                    <option selected value="1">Cash on delivery</option>
+                    <option value="2">Paypal</option>
+                    <option value="3">Credit Card</option>
                 </select>
             </div>
-            <div class="col-6 text-center">
+            <div class="col-4 text-center">
                 <h2>Select shipment</h2>
-                <select>
-                    <option selected>AbroadShipment</option>
-                    <option>EconomicalShipment</option>
-                    <option>FastShipment</option>
+                <select name="shipment">
+                    <option selected value="1">AbroadShipment</option>
+                    <option value="2">EconomicalShipment</option>
+                    <option value="3">FastShipment</option>
+                </select>
+            </div>
+            <div class="col-4 text-center">
+                <h2>Select voucher</h2>
+                <select name="voucher">
+                    <option selected value="1">Constant</option>
+                    <option value="2">Percentage</option>
                 </select>
             </div>
         </div>
         <div class="text-center">
-            <a href="/checkout" class="btn btn-success">Order</a>
+            <input type="submit" value="Order">
         </div>
+        </form>
     </div>
     <div id="footer" style="width: 100%; height: 550px; background-color: #e8e8e8; margin-top: 30px;">
         <h3 style="font-size: 40px; text-align: center; padding: 50px 0;">About</h3>

@@ -8,7 +8,7 @@
 <body>
  <div align="center">
   <h1>Register successfully</h1>
-  <a href="/BookstoreManagement-Ex3-Lab1/login.jsp">Login</a>
+  <a href="/BookstoreManagement-Ex3-Lab1/account.html">Login</a>
  </div>
 </body>
 </html>
