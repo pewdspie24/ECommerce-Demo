@@ -497,7 +497,8 @@ public class userControllerImp extends HttpServlet {
 		payment.setVoucher(voucher1);
 		Order order = new Order(0, cart, payment, customerDAO.viewCustomer(customerID), dateFormat.format(new Date()));
 		orderDAO.insertOrder(order);
-		
+		cartDAO.updateCart(cart, totalPrice - discount - voucherdiscount + shipmentPrice, bookQuantity.size()+clothesQuantity.size()+shoesQuantity.size()+electronicQuantity.size());
+		cartDAO.createCart(new Cart(cart.getID()+1, customerDAO.viewCustomer(getcustomerID(request)), dateFormat.format(new Date()), dateFormat.format(new Date()), 0, 0));
 		request.setAttribute("bookItems", bookItems);
 		request.setAttribute("clothesItems", clothesItems);
 		request.setAttribute("shoesItems", shoesItems);

@@ -25,8 +25,8 @@ public class CartDAOImp implements CartDAO {
 
     private static final String INSERT_CART_SQL = "INSERT INTO cart"
             + "  (customerID, createdAt, updatedAt, totalQuantity, totalPrice) VALUES " + " (?, ?, ?, ?, ?);";
-    private static final String UPDATE_CART_BY_ID = "UPDATE cart SET totalPrice= ? AND totalQuantity = ? WHERE ID = ?;";
-    private static final String SELECT_CART_BY_ID = "select id, customerID from cart where customerID =?";
+    private static final String UPDATE_CART_BY_ID = "UPDATE cart SET totalPrice= ?, totalQuantity = ? WHERE ID = ?;";
+    private static final String SELECT_CART_BY_ID = "select *  from cart where customerID =? and id=(select MAX(id) from cart);";
     private static final String INSERT_BITEM_CART = "INSERT INTO bookitem_cart"
             + "  (BookitemID, cartID, quantity) VALUES " + " (?, ?, ?);";
     private static final String INSERT_CITEM_CART = "INSERT INTO clothesitem_cart"
@@ -439,8 +439,8 @@ public class CartDAOImp implements CartDAO {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 int ID = rs.getInt("ID");
-                // String createdAt = rs.getString("createdAt");
-                // String updatedAt= rs.getString("updatedAt");
+//                 String createdAt = rs.getString("createdAt");
+//                 String updatedAt= rs.getString("updatedAt");
                 // Float totalPrice = rs.getFloat("totalPrice");
                 // int totalQuantity = rs.getInt("totalQuantity");
                 CustomerDAOImp cusdao = new CustomerDAOImp();
