@@ -155,7 +155,7 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Order">
+            <input type="submit" class="btn btn-success" style="height: auto;" value="Order">
         </div>
         </form>
     </div>

@@ -143,39 +143,6 @@ public class userControllerImp extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getServletPath();
-		// System.out.println(action);
-		// String firstName = "Nguyen";
-		// String lastName = "Nam";
-		// String email = "1";
-		// String password = "1";
-		// String phoneNumber = "000111";
-		// String stateNo = "024";
-		// String houseNo = "106";
-		// String street = "ngõ 136 NH - ĐX";
-		// String district = "Gia Lâm";
-		// String city = "Hà Nội";
-		// String gender = "Nam";
-		// String birth = "00/01/2021";
-		// String accountNum = "19199191";
-
-		// String now = timeFormat.format(new Date());
-		// Account account = new Account(accountDAO.getMaxID() + 1, email, password,
-		// now);
-		// Phone phone = new Phone(phoneDAO.getMaxID() + 1, stateNo, phoneNumber);
-		// Fullname fullname = new Fullname(fullnameDAO.getMaxID() + 1, firstName,
-		// lastName);
-		// Address address = new Address(addressDAO.getMaxID() + 1, houseNo, street,
-		// district, city);
-		// Customer customer = new Customer(customerDAO.getMaxID() + 1, accountNum,
-		// gender, birth, account, fullname,
-		// phone, address);
-
-		// accountDAO.createAccount(account);
-		// phoneDAO.createPhone(phone);
-		// fullnameDAO.createFullName(fullname);
-		// addressDAO.insertAddress(address);
-		// customerDAO.insertCustomer(customer);
-
 		try {
 			switch (action.toLowerCase()) {
 			case "/register":
@@ -202,9 +169,6 @@ public class userControllerImp extends HttpServlet {
 			case "/addclothes":
 				addClothesItem(request, response);
 				break;
-			// case "/addcart":
-			// addCart(request, response);
-			// break;
 			case "/showcart":
 				showCart(request, response);
 				break;
@@ -396,7 +360,6 @@ public class userControllerImp extends HttpServlet {
 		int shipmentID = Integer.parseInt(request.getParameter("shipment"));
 		int voucherID = Integer.parseInt(request.getParameter("voucher"));
 		int paymentID = Integer.parseInt(request.getParameter("payment"));
-//		System.out.println("DCMM"+voucherID);
 		if (requireLogin && customerID <= 0) {
 			response.sendRedirect("account.html");
 			return;
@@ -415,9 +378,9 @@ public class userControllerImp extends HttpServlet {
 		HashMap<Integer, Integer> shoes = cartDAO.getShoesItem(cart.getID());
 		HashMap<Integer, Integer> electronics = cartDAO.getElectronicItemIDList(cart.getID());
 		Shipment shipment = shipmentDAO.getShipmentByID(shipmentID);
-		System.out.println("DCMM"+voucherID);
 		Voucher voucher1 = voucherDAO.getVoucherByID(voucherID);
-		Payment payment = paymentDAO.getPaymentByID(paymentID);
+		// Payment payment = paymentDAO.getPaymentByID(paymentID);
+		Payment payment = new Payment(0, 0, null, null);
 		
 //		if (shipmentID == 3){
 //			FastShipment shipment = shipmentDAO.findFastShipmentByID(shipmentID);
