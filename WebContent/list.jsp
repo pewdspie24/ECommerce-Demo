@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,12 @@ style="position: absolute; top: 1rem; right: 1rem; z-index:100; background-color
                         <li><a href="products.html">Products</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <c:if test="${customerID}">
+                            <li><a href="logout">Logout</a></li>
+                        </c:if>
+                        <c:if test="${!customerID}">
+                            <li><a href="account.html">Account</a></li>
+                        </c:if>
                     </ul>
                 </nav>
                 <a href="cart"><img src="images/cart.png" width="30px" height="30px"></a>

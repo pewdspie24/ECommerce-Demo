@@ -115,17 +115,19 @@ public class userControllerImp extends HttpServlet {
 
 	private Cookie getCookie(HttpServletRequest request, String name) {
 		Cookie[] cookies = request.getCookies();
-
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equalsIgnoreCase(name)) {
-				return new Cookie(cookie.getName(), cookie.getValue());
+		System.out.println(cookies);
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals(name)) {
+					return cookie;
+				}
 			}
 		}
 		return null;
 	}
 
 	private int getcustomerID(HttpServletRequest request) {
-		Cookie cookie = getCookie(request, "customerID");
+		Cookie cookie = getCookie(request, "customerId");
 		if (cookie != null) {
 			String customerIDname = cookie.getValue();
 
@@ -239,6 +241,14 @@ public class userControllerImp extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
+
+	// public void showAccount(HttpServletRequest request, HttpServletResponse response)
+	// 		throws ServletException, IOException {
+	// 	int customerID = getcustomerID(request);
+	// 	if (customerID == 0) {
+	// 		request.
+	// 	}
+	// }
 
 	public void registerform(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -372,6 +382,8 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("discount", discount);
 		request.setAttribute("total", totalPrice - discount);
+
+		request.setAttribute("customerID", customerID > 0);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("checkoutDetail.jsp");
 		dispatcher.forward(request, response);
@@ -512,10 +524,9 @@ public class userControllerImp extends HttpServlet {
 	}
 
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Cookie cookie = new Cookie("customerID", "");
+		Cookie cookie = new Cookie("customerId", "");
 		response.addCookie(cookie);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
+		response.sendRedirect("home");
 	}
 
 	public void listBooks(HttpServletRequest request, HttpServletResponse response)
@@ -532,6 +543,7 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("listComics", comics);
 		request.setAttribute("listMagazine", magazine);
 		request.setAttribute("listLightNovel", lightNovel);
+		request.setAttribute("customerID", customerID > 0);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("booklist.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -576,6 +588,7 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("listMobile", mobile);
 		request.setAttribute("listLaptop", laptop);
 		request.setAttribute("listComputer", computer);
+		request.setAttribute("customerID", customerID > 0);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
 		dispatcher.forward(request, response);
@@ -595,6 +608,7 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("listBoot", boots);
 		request.setAttribute("listSandal", sandals);
 		request.setAttribute("listSneaker", sneakers);
+		request.setAttribute("customerID", customerID > 0);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -810,6 +824,7 @@ public class userControllerImp extends HttpServlet {
 		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("discount", discount);
 		request.setAttribute("total", totalPrice - discount);
+		request.setAttribute("customerID", customerID > 0);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
 		dispatcher.forward(request, response);
@@ -838,8 +853,8 @@ public class userControllerImp extends HttpServlet {
 			int customerId = customerDAO.getCustomerID(accountID);
 			Cookie cookie = new Cookie("customerId", String.valueOf(customerId));
 			response.addCookie(cookie);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-			dispatcher.forward(request, response);
+			request.setAttribute("customerID", customerId);
+			response.sendRedirect("home");
 		} else {
 			response.sendRedirect("loginfailed.jsp");
 		}
