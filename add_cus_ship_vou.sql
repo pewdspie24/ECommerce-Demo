@@ -11,4 +11,5 @@ INSERT INTO shipment (`price`, `description`, `Id3`, `company`) VALUES (150, 'ja
 INSERT INTO voucher (`name`, `expiresDate`, `Id2`, `quantity`) VALUES ('Your name', '12-12-2021', 1, 50);
 INSERT INTO voucher (`name`, `expiresDate`, `Id2`, `quantity`) VALUES ('Your voice', '31-12-2021', 1, 5);
 
+INSERT INTO `payment` VALUES (1,1,1,0,1,50,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,1,1,0,NULL,NULL,1,'VCB','2020',NULL,NULL,NULL,NULL),(3,1,1,0,NULL,NULL,NULL,NULL,NULL,1,'845854773','VISA','31-12-2021');
 -- Payment thì user create nhé, mấy cái thừa ra thì set trong code thôi--  
